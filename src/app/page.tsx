@@ -15,7 +15,7 @@ import { FeatureCard } from '@/components/landingPage/feature-card';
 import TemplateShowcase from '@/components/landingPage/template-showcase';
 import Link from 'next/link';
 import * as motion from 'motion/react-client';
-import { getAppOriginUrl } from './utils/functions';
+import { getAppOriginUrl } from '../utils/functions';
 import PricingSection from '@/components/landingPage/pricing-section';
 
 const LINKS = {

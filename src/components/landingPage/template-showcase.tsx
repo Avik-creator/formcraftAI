@@ -3,7 +3,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from 'lucide-react';
-import { templates } from '@/app/utils/data';
+import { templates } from '@/utils/data';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 
