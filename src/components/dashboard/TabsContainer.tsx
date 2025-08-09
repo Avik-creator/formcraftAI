@@ -3,7 +3,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useUser } from '@clerk/nextjs';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -41,26 +40,25 @@ const TabsContainer = ({ children }: { children: React.ReactNode }) => {
           )}
         </div>
         <div className="justify-between gap-3 items-center sm:flex mx-auto sm:m-0">
-          {/* <DateTimePicker className="md:w-[200px]" placeHolderClasses="text-white" granularity="day" /> */}
-          {/* <Button variant={'default'}>Download</Button> */}
-          <TabsList className="">
-            <TabsTrigger value="/" className="text-xs md:text-sm">
-              <Link prefetch href="/">
-                Overview
-              </Link>
+          <TabsList className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/60 rounded-xl p-1 shadow-sm">
+            <TabsTrigger
+              value="/dashboard"
+              className="text-xs md:text-sm px-4 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5 transition-colors focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-white/10 data-[state=active]:border data-[state=active]:border-zinc-700/60"
+            >
+              Overview
             </TabsTrigger>
-            <TabsTrigger value="/dashboard/forms" className="text-xs md:text-sm">
-              <Link prefetch href="/dashboard/forms">
-                My Forms
-              </Link>
+            <TabsTrigger
+              value="/dashboard/forms"
+              className="text-xs md:text-sm px-4 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5 transition-colors focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-white/10 data-[state=active]:border data-[state=active]:border-zinc-700/60"
+            >
+              My Forms
             </TabsTrigger>
-            <TabsTrigger value="/dashboard/templates" className="text-xs md:text-sm">
-              <Link prefetch href="/dashboard/templates">
-                {' '}
-                Templates
-              </Link>
+            <TabsTrigger
+              value="/dashboard/templates"
+              className="text-xs md:text-sm px-4 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5 transition-colors focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-white/10 data-[state=active]:border data-[state=active]:border-zinc-700/60"
+            >
+              Templates
             </TabsTrigger>
-           
           </TabsList>
         </div>
       </div>

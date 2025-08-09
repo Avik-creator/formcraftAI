@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -14,10 +13,9 @@ import { useFormActionProperty } from '@/zustand/store';
 import { LayoutTemplate, PuzzleIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import BuildWithAI from './BuildWithAI';
-import ActionWidget from './ActionWidget';
 import { NewFeatureBadge } from '@/components/common/FeatureReleaseBadge';
 import useFeatureAnnouncer from '@/hooks/useFeatureAnnouncer';
+import BuildWithAI from './BuildWithAI';
 import { useEffect, useState } from 'react';
 
 interface CreateFormModalProps {
@@ -73,41 +71,24 @@ const CreateFormModal = ({ open, setOpen, className }: CreateFormModalProps) => 
           </Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="rounded-xl max-w-[95dvw] sm:max-w-[700px] max-h-[90dvh] overflow-y-auto backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg">
-        <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">New Form</DialogTitle>
-          <DialogDescription className="text-sm text-zinc-400">Choose how you want to create your form.</DialogDescription>
+      <DialogContent className="rounded-xl max-w-[95dvw] sm:max-w-[520px] p-5 backdrop-blur-sm bg-zinc-950/90 border border-zinc-800/60 shadow-xl">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="text-base font-semibold text-white">Create a form</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
           <BuildWithAI />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ActionWidget
-              title="Build from scratch"
-              icon={PuzzleIcon}
-              description="Create a form from scratch"
-              className="bg-gradient-to-br from-[#080808] to-[#1c212dc7]"
-            >
-              <Button variant={'secondary'} className="w-full" onClick={handleBuildFromScratch}>
-                Create from scratch
-              </Button>
-            </ActionWidget>
-            <ActionWidget
-              title="Start with a template"
-              icon={LayoutTemplate}
-              description="Create a form from pre-built templates"
-              className="bg-gradient-to-br from-green-950/30 to-emerald-950/30"
-            >
-              <Button variant="secondary" className="w-full" onClick={handleWithTemplateOption}>
-                Browse templates
-              </Button>
-            </ActionWidget>
-          </div>
+          <Button className="w-full justify-start gap-2" onClick={handleBuildFromScratch}>
+            <PuzzleIcon className="w-4 h-4" /> Build from scratch
+          </Button>
+          <Button variant="secondary" className="w-full justify-start gap-2" onClick={handleWithTemplateOption}>
+            <LayoutTemplate className="w-4 h-4" /> Start with a template
+          </Button>
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="pt-3">
           <DialogClose asChild>
-            <Button variant="secondary" className="btn" onClick={() => setOpen(false)}>
+            <Button variant="ghost" onClick={() => setOpen(false)}>
               Cancel
             </Button>
           </DialogClose>

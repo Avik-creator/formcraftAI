@@ -1,6 +1,5 @@
 import React from 'react';
-import ActionWidget from './ActionWidget';
-import { Loader2, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import FormField from '@/components/common/FormField';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -8,8 +7,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useFormActionProperty } from '@/zustand/store';
 import { useRouter } from 'next/navigation';
 import AnimatedPromptTextarea from './AnimatedTextArea';
-import { NewFeatureBadge } from '@/components/common/FeatureReleaseBadge';
-import useFeatureAnnouncer from '@/hooks/useFeatureAnnouncer';
 
 const useGeminiChat = () => {
   return useMutation({
@@ -22,7 +19,7 @@ const useGeminiChat = () => {
         body: JSON.stringify({ prompt }),
       });
       const data = await res.json();
-      
+
       if (data?.content) {
         return data?.content;
       } else {
@@ -45,7 +42,6 @@ const BuildWithAI = () => {
   const [value, setValue] = React.useState('');
   const setFormConfig = useFormActionProperty('setFormConfig');
   const router = useRouter();
-  const hasAnnouncedAiFormGenFeature = useFeatureAnnouncer('ai-form-generation');
 
   const handlePromptSubmit = () => {
     const prompt = value;
@@ -71,47 +67,32 @@ const BuildWithAI = () => {
   };
 
   return (
-    <ActionWidget
-      title={
-        <span className="flex items-center gap-2">
-          Build with AI ✨{' '}
-          {!hasAnnouncedAiFormGenFeature && (
-            <NewFeatureBadge className="px-3 py-0.5 w-fit" childrenClass="text-[10px]" />
-          )}
-        </span>
-      }
-      icon={Sparkles}
-      description="Describe what you need, and we wll generate a form for you instantly"
-      className="bg-gradient-to-b from-black via-[#101316] to-[#1f1f23] w-full"
-    >
-      <FormField
-        label="Describe what you need"
-        id="description"
-        className="font-normal text-sm bg-clip-text text-transparent bg-gradient-to-r from-zinc-800 to-[#191923]"
-      >
+    <div className="w-full rounded-xl border border-zinc-800/60 bg-zinc-900/50 p-4 sm:p-5">
+      <div className="mb-3">
+        <h3 className="text-sm font-semibold text-white">Build with AI</h3>
+        <p className="text-xs text-zinc-400">Describe what you need and we’ll generate a form for you.</p>
+      </div>
+
+      <FormField label="Description" id="ai-description" className="text-sm">
         <AnimatedPromptTextarea placeholders={examplePrompts} onValueChange={setValue} />
-        <small className="text-muted-foreground text-xs">
-          Tip💡 : Provide details like fields, validation rules, and layout preferences for better results.
-        </small>
+        <small className="text-zinc-500 text-xs">Tip: mention fields, validation rules, and layout preferences.</small>
       </FormField>
+
       <Button
         variant={'default'}
         className="flex items-center mt-4 w-full"
         onClick={handlePromptSubmit}
         disabled={isPending}
       >
-        {!isPending && (
-          <>
-            Generate with AI <Sparkles className="ml-2 w-4 h-4" color="#000" />{' '}
-          </>
-        )}
-        {isPending && (
+        {isPending ? (
           <>
             AI is working... <Loader2 className="ml-2 w-4 h-4 animate-spin" />
           </>
+        ) : (
+          <>Generate with AI</>
         )}
       </Button>
-    </ActionWidget>
+    </div>
   );
 };
 
