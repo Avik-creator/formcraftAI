@@ -117,12 +117,12 @@ export function Combobox({
       </PopoverTrigger>
       <PopoverContent
         style={{ width: popupWidth, ...dropdownStyle }}
-        className={cn('p-0 bg-zinc-900/95 border-zinc-700/70 shadow-lg backdrop-blur-sm', dropdownClassName)}
+        className={cn('p-0 bg-zinc-900/95 border-zinc-700/70 shadow-lg backdrop-blur-sm max-h-80 overflow-auto', dropdownClassName)}
       >
         <Command className="bg-transparent text-zinc-100 [&_[cmdk-input-wrapper]]:border-zinc-800 [&_[cmdk-group-heading]]:text-zinc-400">
-          <CommandInput placeholder="Search..." className="h-9 placeholder:text-zinc-400" />
+          <CommandInput placeholder="Search..." className="h-9 text-zinc-100 placeholder:text-zinc-400" />
           <CommandList>
-            <CommandEmpty>Nothing Found.</CommandEmpty>
+            <CommandEmpty className="p-2 text-zinc-400">Nothing found.</CommandEmpty>
             <CommandGroup>
               {_options?.map((option) => (
                 <CommandItem

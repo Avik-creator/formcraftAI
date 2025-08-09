@@ -1,3 +1,5 @@
+'use server'
+
 export const getAllFontsAction = async () => {
   const fallback = {
     items: [
@@ -15,6 +17,8 @@ export const getAllFontsAction = async () => {
   try {
     const apiKey = process.env.GOOGLE_FONTS_API_KEY;
 
+
+
     if (!apiKey) {
       return { success: true, data: fallback };
     }
@@ -24,7 +28,6 @@ export const getAllFontsAction = async () => {
       { cache: 'no-store', next: { revalidate: 0 } as any },
     );
 
-    console.log(res, 'res from Google Fonts');
 
     if (!res.ok) {
       return { success: true, data: fallback };
