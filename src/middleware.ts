@@ -6,24 +6,33 @@ const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/form
 export default clerkMiddleware(async (auth, request) => {
   const { pathname } = request.nextUrl;
 
-  // Allow public routes without checks
+  const { userId } = await auth();
+
+  // If user is logged in, redirect certain routes to dashboard
+  if (userId) {
+    const isAuthPage = pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up');
+    const isRoot = pathname === '/';
+
+    if (isAuthPage || isRoot) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/dashboard';
+      url.searchParams.delete('redirect_url');
+      return NextResponse.redirect(url);
+    }
+
+    return NextResponse.next();
+  }
+
+  // Allow public routes without checks for unauthenticated users
   if (isPublicRoute(request)) {
     return NextResponse.next();
   }
 
-  // Protect all non-public routes
-  const { userId } = await auth();
-
-  // If user not signed in, redirect to sign-in with return path
-  if (!userId) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/sign-in';
-    url.searchParams.set('redirect_url', pathname);
-    return NextResponse.redirect(url);
-  }
-
-  // If user is signed in, just proceed (avoid redirecting /dashboard to itself)
-  return NextResponse.next();
+  // Protect all non-public routes for unauthenticated users
+  const url = request.nextUrl.clone();
+  url.pathname = '/sign-in';
+  url.searchParams.set('redirect_url', pathname);
+  return NextResponse.redirect(url);
 });
 
 export const config = {
