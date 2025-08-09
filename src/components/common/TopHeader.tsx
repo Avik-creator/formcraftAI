@@ -18,7 +18,7 @@ import CustomTooltip from '@/components/ui/custom-tooltip';
 import { useCreateActivityMutation } from '@/data-fetching/client/activity';
 
 const links = [
-  { href: '/', label: 'Dashboard' },
+  { href: '/dashboard', label: 'Dashboard' },
   { href: '/builder', label: 'Builder' },
 ];
 

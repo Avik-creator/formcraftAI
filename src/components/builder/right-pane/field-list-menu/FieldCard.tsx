@@ -1,8 +1,6 @@
 import CustomTooltip from '@/components/ui/custom-tooltip';
 import { CirclePlus } from 'lucide-react';
 import { SectionField } from './config';
-import useFeatureAnnouncer from '@/hooks/useFeatureAnnouncer';
-import { NewFeatureBadge } from '@/components/common/FeatureReleaseBadge';
 
 interface FieldCardProps {
   icon: React.ReactNode | React.JSX.Element;
@@ -13,8 +11,7 @@ interface FieldCardProps {
   onClick: (field: Partial<SectionField>) => void;
 }
 
-const FieldCard = ({ icon, name, description, type, featureTag, onClick }: FieldCardProps) => {
-  const hasAnnouncedFeatureTag = useFeatureAnnouncer(featureTag as string, !!featureTag);
+const FieldCard = ({ icon, name, description, type, onClick }: FieldCardProps) => {
 
   return (
     <div
@@ -25,7 +22,6 @@ const FieldCard = ({ icon, name, description, type, featureTag, onClick }: Field
         <div className="flex items-center gap-3">
           {icon}
           <h3 className="font-semibold text-sm bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">{name}</h3>
-          {!hasAnnouncedFeatureTag && <NewFeatureBadge className="w-fit px-2 py-0.5" childrenClass="text-[9px]" />}
         </div>
         <CustomTooltip tooltip={`Click to Add a ${name}`} triggerClassName="ml-auto inline">
           <CirclePlus className=" w-4 h-4 text-zinc-400 hover:text-white transition-colors inline ml-auto" />
