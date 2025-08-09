@@ -24,7 +24,7 @@ export const FormDescription = () => {
   const { v: description, handleChange } = usePropertyAndUpdate('description');
   return (
     <FormField label="Form Description" id="description">
-      <Input id="description" value={description} className="bg-background" onChange={handleChange('description')} />
+      <Input id="description" value={description} className="bg-background text-white" onChange={handleChange('description')} />
     </FormField>
   );
 };

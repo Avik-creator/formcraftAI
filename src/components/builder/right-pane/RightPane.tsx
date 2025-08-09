@@ -23,13 +23,17 @@ const RightPane = ({ className }: GenericProps) => {
   return (
     <div className={classes}>
       <Tabs value={selected} className="w-full">
-        <TabsList className="w-full flex justify-between sticky top-1 z-10 bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50">
-          <TabsTrigger value="fields" className="basis-1/2" onClick={() => setSelected('fields')}>
+        <TabsList className="w-full sticky top-0 z-10 bg-zinc-900/60 backdrop-blur-sm border border-zinc-800/60 rounded-xl p-1 shadow-sm flex">
+          <TabsTrigger
+            value="fields"
+            className="basis-1/2 px-3 py-2 rounded-lg text-xs md:text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-white/10 data-[state=active]:border data-[state=active]:border-zinc-700/60"
+            onClick={() => setSelected('fields')}
+          >
             Fields
           </TabsTrigger>
           <TabsTrigger
             value="settings"
-            className="basis-1/2"
+            className="basis-1/2 px-3 py-2 rounded-lg text-xs md:text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-white/10 data-[state=active]:border data-[state=active]:border-zinc-700/60 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!selectedField}
             onClick={() => setSelected('settings')}
           >

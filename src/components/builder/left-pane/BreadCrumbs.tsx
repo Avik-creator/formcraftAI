@@ -22,18 +22,20 @@ interface LeftPaneBreadCrumbsProps {
 const LeftPaneBreadCrumbs = ({ links }: LeftPaneBreadCrumbsProps) => {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="sm:gap-1">
+      <BreadcrumbList className="sm:gap-1 text-zinc-400">
         {links?.map((link, idx: number) => (
           <Fragment key={link.href}>
-            <BreadcrumbItem key={link.href}>
+            <BreadcrumbItem key={link.href} className="max-w-[9rem] truncate">
               {idx === links?.length - 1 ? (
-                <BreadcrumbPage>{link.label}</BreadcrumbPage>
+                <BreadcrumbPage className="text-zinc-300">{link.label}</BreadcrumbPage>
               ) : (
-                <Link href={link.href}>{link.label}</Link>
+                <Link href={link.href} className="hover:text-white transition-colors truncate">
+                  {link.label}
+                </Link>
               )}
             </BreadcrumbItem>
             {idx !== links?.length - 1 && (
-              <BreadcrumbSeparator>
+              <BreadcrumbSeparator className="text-zinc-500">
                 <SlashIcon />
               </BreadcrumbSeparator>
             )}
