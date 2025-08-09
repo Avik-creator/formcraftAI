@@ -17,6 +17,7 @@ import Link from 'next/link';
 import * as motion from 'motion/react-client';
 import { getAppOriginUrl } from '../utils/functions';
 import PricingSection from '@/components/landingPage/pricing-section';
+import { HeroVideoDialog } from '@/components/ui/VideoDialog';
 
 const LINKS = {
     githubProfile: 'https://github.com/Avik-creator',
@@ -131,7 +132,7 @@ const LandingPage = () => {
                         </motion.p>
                         <motion.div
                             variants={childVariants}
-                            className="flex flex-col sm:flex-row gap-4 justify-center"
+                            className="flex flex-col gap-4 justify-center items-center"
                         >
                             <Button
                                 size="lg"
@@ -142,13 +143,22 @@ const LandingPage = () => {
                                 </Link>
                                 <ArrowRightIcon className="ml-2 h-4 w-4" />
                             </Button>
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-zinc-700 bg-zinc-800/50 hover:bg-zinc-700 text-zinc-300 hover:text-white" 
-                            >
-                                <Link href={'#demo'}>Watch Demo</Link>
-                            </Button>
+                            
+                                                <HeroVideoDialog
+                                                    className="block dark:hidden"
+                                                    animationStyle="from-center"
+                                                    videoSrc="https://youtu.be/QobiyTAybSg"
+                                                    thumbnailSrc="https://formcraftai.avikmukherjee.me/og-image.png"
+                                                    thumbnailAlt="Hero Video"
+                                                />
+                        <HeroVideoDialog
+                                            className="hidden dark:block"
+                                            animationStyle="from-center"
+                                            videoSrc="https://youtu.be/QobiyTAybSg"
+                                            thumbnailSrc="https://formcraftai.avikmukherjee.me/og-image.png"
+                                            thumbnailAlt="Hero Video"
+                                        />
+                           
                         </motion.div>
                     </motion.div>
 
