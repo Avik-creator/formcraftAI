@@ -1,4 +1,4 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -119,4 +119,268 @@
   body {
     @apply bg-background text-foreground;
   }
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
+layer(base);
+@import 'tailwindcss';
+
+@config '../../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility glass-card {
+  @layer utilities {
+    @apply backdrop-blur-xs bg-black/30 border border-zinc-800/50 shadow-lg;
+  }
+}
+
+@utility hover-lift {
+  @layer utilities {
+    @apply hover:transform-gpu hover:-translate-y-1 transition-transform duration-300;
+  }
+}
+
+@utility gradient-text {
+  @layer utilities {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-white to-zinc-400;
+  }
+}
+
+@utility gradient-text-dark {
+  @layer utilities {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-zinc-800 to-[#191923];
+  }
+}
+
+@utility gradient-text-light {
+  @layer utilities {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-white to-zinc-300;
+  }
+}
+
+@utility gradient-border {
+  @layer utilities {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05),
+        transparent
+      );
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  }
+}
+
+@utility form-builder-panel {
+  @layer utilities {
+    @apply glass-card bg-black/30 border-zinc-800/30;
+  }
+}
+
+@utility form-builder-panel-header {
+  @layer utilities {
+    @apply text-white text-sm font-medium px-4 py-2 border-b border-zinc-800/30;
+  }
+}
+
+@utility form-builder-field-item {
+  @layer utilities {
+    @apply flex items-center gap-2 px-3 py-2.5 rounded-md cursor-pointer hover:bg-zinc-800/30 transition-colors;
+  }
+}
+
+@utility form-builder-preview {
+  @layer utilities {
+    @apply bg-zinc-900/30 backdrop-blur-xs rounded-lg p-6 border border-zinc-800/50 shadow-lg;
+  }
+}
+
+@utility form-builder-control {
+  @layer utilities {
+    @apply bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-700/50 rounded-md px-3 py-1.5 text-sm transition-colors;
+  }
+}
+
+@utility form-builder-section {
+  @layer utilities {
+    @apply mb-6 pb-4 border-b border-zinc-800/30;
+  }
+}
+
+@layer utilities {
+  .clerk-footer {
+    background: #111112;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 12% 5%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 359 2% 90%;
+    --chart-2: 240 1% 74%;
+    --chart-3: 240 1% 58%;
+    --chart-4: 240 1% 42%;
+    --chart-5: 240 2% 26%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    /* --background: 240 10% 3.9%; */
+    --background: 199.53deg 7.75% 1.86% / 14%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 225 10% 70%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 359 2% 90%;
+    --chart-2: 240 1% 74%;
+    --chart-3: 240 1% 58%;
+    --chart-4: 240 1% 42%;
+    --chart-5: 240 2% 26%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    @apply bg-background text-foreground;
+  }
+  /* ===== Scrollbar CSS ===== */
+  *::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  /* *::-webkit-scrollbar-track { */
+  /* background: #1c1c1c; */
+  /* } */
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #383637;
+    border-radius: 13px;
+    /* border: 2px solid #262525; */
+  }
+
+  .background-dots,
+  .center-pane {
+    background-size: 1.2rem 1.2rem;
+    background-image: radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
+    background-position: 0 -1.2rem;
+  }
+
+  .center-pane {
+    cursor: grab;
+  }
+
+  .center-pane::-webkit-scrollbar,
+  .background-dots::-webkit-scrollbar {
+    display: none;
+  }
+
+  .center-pane:active {
+    cursor: grabbing;
+    user-select: none;
+  }
+}
+
+.clerk-footer {
+  padding-bottom: 10px;
+}
+.cl-userProfile-root .cl-cardBox .cl-navbar div:nth-of-type(3),
+.clerk-footer div:last-child,
+.cl-userButtonPopoverFooter {
+  display: none;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.menu-item:hover {
+  animation: bounce 0.5s ease;
+}
+

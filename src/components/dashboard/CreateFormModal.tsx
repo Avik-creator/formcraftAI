@@ -18,6 +18,7 @@ import BuildWithAI from './BuildWithAI';
 import ActionWidget from './ActionWidget';
 import { NewFeatureBadge } from '@/components/common/FeatureReleaseBadge';
 import useFeatureAnnouncer from '@/hooks/useFeatureAnnouncer';
+import { useEffect, useState } from 'react';
 
 interface CreateFormModalProps {
   open: boolean;
@@ -29,6 +30,11 @@ const CreateFormModal = ({ open, setOpen, className }: CreateFormModalProps) => 
   const router = useRouter();
   const setFormConfig = useFormActionProperty('setFormConfig');
   const hasAnnouncedNewFormFeature = useFeatureAnnouncer('new-form-generation-capability');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const mutate = useCreateFormMutation({
     onMutate: () => {
@@ -61,7 +67,7 @@ const CreateFormModal = ({ open, setOpen, className }: CreateFormModalProps) => 
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className={className}>
         <div className="flex gap-2 items-center">
-          {!hasAnnouncedNewFormFeature && <NewFeatureBadge />}
+          {mounted && !hasAnnouncedNewFormFeature && <NewFeatureBadge />}
           <Button variant="default" size={'sm'}>
             Create a new form
           </Button>

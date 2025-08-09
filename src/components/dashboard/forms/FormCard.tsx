@@ -58,37 +58,50 @@ const FormCard = ({
     <>
       <Card
         className={cn(
-          'backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg',
-          'hover:-translate-y-1 hover:border-zinc-700/50 transition-transform duration-300',
+          'group relative overflow-hidden backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg',
+          'hover:-translate-y-1 hover:border-zinc-700/50 hover:bg-zinc-900/40 hover:shadow-xl transition-all duration-300',
           {
             'cursor-pointer': !isPreview,
             'cursor-not-allowed animate-pulse': isPreview,
           },
         )}
       >
-        <CardHeader className="space-y-0.5">
+        <CardHeader className="space-y-2">
           <CardTitle className="flex items-center justify-between w-full gap-4">
             <h2
-              className="text-base md:text-lg max-w-[90%] bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400 flex items-center group transition-all duration-300"
+              className="text-base md:text-lg max-w-[90%] bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300 flex items-center group"
               onClick={() => onEdit?.(id, title)}
             >
-              <Link prefetch href={`/builder`}>
+              <Link prefetch href={`/builder`} className="inline-flex items-center">
                 {title || 'Untitled Form'}
-                <ArrowRight className="w-4 h-4 inline ml-2 group-hover:opacity-100 opacity-0" />
+                <ArrowRight className="w-4 h-4 inline ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </Link>
             </h2>
             {!isPreview && <Menu items={formActions} />}
           </CardTitle>
-          <CardDescription className="-mt-6 text-xs text-zinc-300">{description}</CardDescription>
+          <CardDescription className="-mt-1 text-xs text-zinc-300 truncate">
+            {description}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Link prefetch href={submissions > 0 ? `/dashboard/forms/${id}` : ''} className="font-semibold group">
-            <span className="font-bold text-2xl">{submissions}</span> <span className="text-zinc-300">submissions</span>
-            {submissions > 0 && <ArrowRight className="w-4 h-4 inline ml-2" aria-label="View Submissions" />}
+          <Link
+            prefetch
+            href={submissions > 0 ? `/dashboard/forms/${id}` : ''}
+            className={cn(
+              'inline-flex items-center gap-2 px-3 py-2 rounded-md border transition-colors',
+              'bg-zinc-800/30 border-zinc-700/40 hover:bg-zinc-800/50',
+              'font-semibold'
+            )}
+          >
+            <span className="font-bold text-2xl text-white">{submissions}</span>
+            <span className="text-zinc-300">submissions</span>
+            {submissions > 0 && (
+              <ArrowRight className="w-4 h-4 ml-1 opacity-80 group-hover:translate-x-1 transition-transform" aria-label="View Submissions" />
+            )}
           </Link>
         </CardContent>
         <CardFooter className="flex items-center justify-between w-full gap-4 text-ellipsis">
-          <p className="text-zinc-400 text-xs">
+          <p className="text-zinc-400 text-xs" title={new Date(lastModified ?? Date.now()).toLocaleString()}>
             Last modified: {formatDistanceToNow(new Date(lastModified ?? Date.now()))}
           </p>
           <FormStatusTag status={isPreview ? 'creating-new' : status} />
