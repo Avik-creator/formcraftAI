@@ -37,7 +37,7 @@ const useFormThemeUpdater = () => {
 
 const FormFontPrimaryColor = () => {
   const fontPrimary = useFormConfigStore(
-    (state) => state?.formConfig?.theme?.properties?.primaryTextColor
+    (state) => state?.formConfig?.theme?.properties?.primaryTextColor || '#ffffff'
   );
   const handleChange = useFormThemeUpdater();
   return (
@@ -46,7 +46,7 @@ const FormFontPrimaryColor = () => {
         showLabel={true}
         triggerClassName="flex-row w-[max-content]"
         className="w-6 h-6"
-        color={fontPrimary!}
+          color={fontPrimary}
         onChange={handleChange("primaryTextColor")}
       />
     </FormField>
@@ -55,7 +55,7 @@ const FormFontPrimaryColor = () => {
 
 const FormFontSecondaryColor = () => {
   const fontSecondary = useFormConfigStore(
-    (state) => state?.formConfig?.theme?.properties?.secondaryTextColor
+    (state) => state?.formConfig?.theme?.properties?.secondaryTextColor || '#a1a1aa'
   );
   const handleChange = useFormThemeUpdater();
   return (
@@ -64,7 +64,7 @@ const FormFontSecondaryColor = () => {
         showLabel={true}
         triggerClassName="flex-row w-[max-content]"
         className="w-6 h-6"
-        color={fontSecondary!}
+          color={fontSecondary}
         onChange={handleChange("secondaryTextColor")}
       />
     </FormField>

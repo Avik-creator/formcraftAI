@@ -3,7 +3,7 @@
 import connectDb from '../db/connection';
 import Activity, { ActivityModelType } from '../models/activity';
 import Form from '../models/form';
-import { verifyAuth } from '../utils';
+import { convertToPlainObject, verifyAuth } from '../utils';
 
 export const createNewActivityAction = async (data: ActivityModelType) => {
   try {
@@ -17,7 +17,7 @@ export const createNewActivityAction = async (data: ActivityModelType) => {
 
     if (!newActivity) throw new Error('Failed to create activity');
 
-    return { success: true, data: newActivity };
+    return { success: true, data: await convertToPlainObject(newActivity) };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
     return { success: false, error: error };
@@ -40,7 +40,7 @@ export const getAllActivitiesFromLastWeekAction = async () => {
       })
       ?.lean();
 
-    return { success: true, data: res };
+    return { success: true, data: await convertToPlainObject(res) };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
     return { success: false, error: error };

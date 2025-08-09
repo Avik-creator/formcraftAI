@@ -8,7 +8,11 @@ import { useSelectedFieldStore } from '@/zustand/store';
 import FieldListMenu from './field-list-menu/FieldListMenu';
 
 const RightPane = ({ className }: GenericProps) => {
-  const classes = cn('h-full bg-background p-4 pt-0 flex flex-col gap-6 overflow-auto', className);
+  const classes = cn(
+    'h-full bg-black/40 backdrop-blur-sm p-6 pt-4 flex flex-col gap-4 overflow-auto',
+    'border-l border-zinc-800/50 shadow-lg',
+    className,
+  );
   const selectedField = useSelectedFieldStore((s) => s?.selectedField);
   const [selected, setSelected] = useState('fields');
 
@@ -19,7 +23,7 @@ const RightPane = ({ className }: GenericProps) => {
   return (
     <div className={classes}>
       <Tabs value={selected} className="w-full">
-        <TabsList className="w-full flex justify-between sticky top-1 z-10 backdrop:blur-md">
+        <TabsList className="w-full flex justify-between sticky top-1 z-10 bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50">
           <TabsTrigger value="fields" className="basis-1/2" onClick={() => setSelected('fields')}>
             Fields
           </TabsTrigger>
@@ -32,10 +36,10 @@ const RightPane = ({ className }: GenericProps) => {
             Settings
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="fields" className="mt-6">
+        <TabsContent value="fields" className="mt-4">
           <FieldListMenu />
         </TabsContent>
-        <TabsContent value="settings" className="mt-6 flex flex-col gap-8">
+        <TabsContent value="settings" className="mt-4 flex flex-col gap-6">
           <FieldConfigMenu />
         </TabsContent>
       </Tabs>

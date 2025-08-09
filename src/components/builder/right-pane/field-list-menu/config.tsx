@@ -32,13 +32,6 @@ const sections = [
         type: 'date',
       },
       {
-        name: 'File Upload',
-        icon: <File className="w-4 h-4 text-white/90" />,
-        description: 'A field for uploading files.',
-        type: 'file',
-        featureTag: 'fileUpload',
-      },
-      {
         name: 'Dropdown',
         icon: <SelectIcon className="w-4 h-4 text-white/90" />,
         description: 'A field that allows users to select one or more options from a set of options.',

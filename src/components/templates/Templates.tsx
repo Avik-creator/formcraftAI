@@ -51,7 +51,7 @@ const Templates = ({ templates }: { templates: FormTemplate[] | undefined }) => 
               <div className="inline-flex p-3 rounded-full bg-zinc-800/50 mb-2">
                 <Sparkles className="w-6 h-6 text-yellow-400/80" />
               </div>
-              <h4 className="text-xl font-bold gradient-text">No templates found</h4>
+              <h4 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">No templates found</h4>
               <p className="text-sm">Try searching with different keywords or browse all templates.</p>
             </div>
           )}

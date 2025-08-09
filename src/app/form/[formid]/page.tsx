@@ -2,6 +2,7 @@ import { getFormConfigWithIdAction } from '@/backend/actions/form';
 import { FormConfig } from '@/types/index';
 import React from 'react';
 import Form from '@/components/form/Form';
+import { notFound } from 'next/navigation';
 
 const themeGradients = {
   'midnight-black': {
@@ -34,7 +35,7 @@ const themeGradients = {
     accentGlow2: 'bg-blue-900/10',
     gridOpacity: '0.4',
   },
-};
+} as const;
 
 const defaultGradient = {
   backgroundGradient: 'from-black to-zinc-950',
@@ -43,42 +44,78 @@ const defaultGradient = {
   gridOpacity: '0.9',
 };
 
-const FormPage = async ({ params }: { params: { formId: string } }) => {
-  const res = await getFormConfigWithIdAction(params.formId).then((res) => res?.data);
-  const formConfig: FormConfig = res || ({} as FormConfig);
+interface FormPageProps {
+  params: Promise<{ formid: string }>;
+}
 
-  const themeName = formConfig?.theme.id || 'midnight-black';
+const FormPage = async ({ params }: FormPageProps) => {
+  try {
+    // Await the params and extract formId
+    const resolvedParams = await params;
+    const { formid } = resolvedParams;
+    
+    // Validate that formId exists
+    if (!formid) {
+      console.error('No formId provided in params');
+      notFound();
+    }
 
-  const gradientConfig = themeGradients[themeName] || defaultGradient;
+    console.log('Processing formId:', formid);
+    
+    // Fetch form configuration with error handling
+    const response = await getFormConfigWithIdAction(formid);
+    
+    if (!response?.data) {
+      console.error('No form data found for formId:', formid);
+      notFound();
+    }
 
-  return (
-    <main
-      className={`w-full h-full overflow-x-hidden min-h-screen relative bg-gradient-to-b ${gradientConfig.backgroundGradient} flex flex-col px-2 sm:px-4 py-8`}
-    >
-      <div
-        className={`absolute top-20 -right-40 w-96 h-96 ${gradientConfig.accentGlow1} rounded-full filter blur-[100px]`}
-      ></div>
-      <div
-        className={`absolute bottom-20 -left-40 w-96 h-96 ${gradientConfig.accentGlow2} rounded-full filter blur-[100px]`}
-      ></div>
+    const formConfig: FormConfig = response.data;
+    console.log('Form config loaded:', formConfig);
 
-      {(themeName === 'deep-violet' || themeName === 'night-sky') && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-900/5 to-blue-900/5 rounded-full filter blur-[120px]"></div>
-      )}
+    // Get theme configuration
+    const themeName = formConfig?.theme?.id || 'midnight-black';
+    const gradientConfig = themeGradients[themeName as keyof typeof themeGradients] || defaultGradient;
 
-      <div
-        className="absolute z-[1] inset-0 bg-[url('/grid.svg')] bg-center"
-        style={{ opacity: gradientConfig.gridOpacity }}
-      ></div>
+    return (
+      <main
+        className={`w-full h-full overflow-x-hidden min-h-screen relative bg-gradient-to-b ${gradientConfig.backgroundGradient} flex flex-col px-2 sm:px-4 py-8`}
+      >
+        {/* Accent glow effects */}
+        <div
+          className={`absolute top-20 -right-40 w-96 h-96 ${gradientConfig.accentGlow1} rounded-full filter blur-[100px]`}
+        ></div>
+        <div
+          className={`absolute bottom-20 -left-40 w-96 h-96 ${gradientConfig.accentGlow2} rounded-full filter blur-[100px]`}
+        ></div>
 
-      <Form formConfig={formConfig} />
+        {/* Additional glow for specific themes */}
+        {(themeName === 'deep-violet' || themeName === 'night-sky') && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-900/5 to-blue-900/5 rounded-full filter blur-[120px]"></div>
+        )}
 
-      <div className="mt-8 flex items-center justify-center opacity-30 hover:opacity-70 transition-opacity -ml-2">
-        <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-900 mr-2"></div>
-        <span className="text-sm font-medium text-zinc-200">Powered by FormCraft</span>
-      </div>
-    </main>
-  );
+        {/* Grid background */}
+        <div
+          className="absolute z-[1] inset-0 bg-[url('/grid.svg')] bg-center"
+          style={{ opacity: gradientConfig.gridOpacity }}
+        ></div>
+
+        {/* Main form component */}
+        <Form formConfig={formConfig} />
+
+        {/* Footer branding */}
+        <div className="mt-8 flex items-center justify-center opacity-30 hover:opacity-70 transition-opacity -ml-2">
+          <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-900 mr-2"></div>
+          <span className="text-sm font-medium text-zinc-200">Powered by FormCraft</span>
+        </div>
+      </main>
+    );
+
+  } catch (error) {
+    console.error('Error in FormPage:', error);
+    // You might want to show an error page or redirect
+    notFound();
+  }
 };
 
 export default FormPage;

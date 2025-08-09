@@ -51,17 +51,7 @@ export const FormTags = () => {
   );
 };
 
-export const FormCover = () => {
-  return (
-    <FormField
-      label="Cover Picture"
-      id="coverPicture"
-      renderLabelExtraContent={() => <ComingSoonBadge className="ml-2" />}
-    >
-      <Input id="coverPicture" className="bg-background" type="file" />
-    </FormField>
-  );
-};
+
 
 export const FormStatus = () => {
   const { v: status, handleChange } = usePropertyAndUpdate('status');

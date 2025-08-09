@@ -100,38 +100,49 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn('justify-between overflow-hidden', triggerClassName)}
+          className={cn(
+            'justify-between overflow-hidden h-9 px-3 bg-zinc-900/40 border-zinc-800 hover:bg-zinc-900/60 text-zinc-100',
+            triggerClassName,
+          )}
           style={triggerStyle}
         >
           {values.length > 0 ? (
             label
           ) : (
-            <span className={placeholderClassName}>{placeholder ?? 'Select an option...'}</span>
+            <span className={cn('text-zinc-400', placeholderClassName)}>{placeholder ?? 'Select an option...'}</span>
           )}
           <CaretSortIcon className="opacity-50 ml-2 w-4 h-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent style={{ width: popupWidth, ...dropdownStyle }} className={cn('p-0', dropdownClassName)}>
-        <Command>
-          <CommandInput placeholder="Search..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>Nothing Found.</CommandEmpty>
-            <CommandGroup>
-              {_options?.map((option) => (
-                <CommandItem key={option?.value as string} value={option?.value as string} onSelect={handleSelect}>
-                  {option?.label}
-                  <CheckIcon
-                    className={cn(
-                      'ml-auto h-4 w-4',
-                      values?.find((v) => v?.value === option?.value) ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
+       <PopoverContent
+          style={{ width: popupWidth, ...dropdownStyle }}
+          className={cn('p-0 bg-zinc-900/95 border-zinc-800', dropdownClassName)}
+        >
+          <Command className="bg-transparent text-zinc-100 [&_[cmdk-input-wrapper]]:border-zinc-800 [&_[cmdk-group-heading]]:text-zinc-400">
+            <CommandInput placeholder="Search..." className="h-9" />
+            <CommandList>
+              <CommandEmpty>Nothing Found.</CommandEmpty>
+              <CommandGroup>
+                {_options?.map((option) => (
+                  <CommandItem
+                    key={option?.value as string}
+                    value={option?.value as string}
+                    onSelect={handleSelect}
+                    className="text-zinc-100 data-[selected=true]:bg-zinc-800"
+                  >
+                    {option?.label}
+                    <CheckIcon
+                      className={cn(
+                        'ml-auto h-4 w-4',
+                        values?.find((v) => v?.value === option?.value) ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
     </Popover>
   );
 }

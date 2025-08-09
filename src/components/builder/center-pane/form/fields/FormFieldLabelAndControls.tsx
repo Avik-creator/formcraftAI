@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils';
 import { FormFieldProps } from '@/types/common';
   import DeleteFieldModal from '@/components/builder/DeleteFieldModal';
 import EditableText from '@/components/common/EditableText';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
 
 interface FormFieldLabelAndControlsProps {
   field: FormFieldProps['field'];
@@ -87,51 +89,32 @@ const FormFieldLabelAndControls = ({
   };
 
   return (
-    <div className="flex gap-3 items-center justify-between break-all break-words">
-      <EditableText
-        tooltipBtnClassName="self-center -mb-3"
-        value={field?.label || ''}
-        renderText={(_, onClick) => (
-          <FormLabel htmlFor={field?.id} className="relative flex " onClick={onClick}>
-            <span>{field.label || <span className="text-muted-foreground">{"What's this field called?"}</span>}</span>
-            <span className="sr-only">{field?.helperText}</span>
-            {field?.validation?.custom?.required?.value !== 'false' && !!field?.validation?.custom?.required?.value && (
-              <sup className="top-[-0.1em] ml-[1px] font-bold text-red-500 text-sm">*</sup>
-            )}
-          </FormLabel>
+    <div className="flex items-center justify-between gap-3 p-4 bg-zinc-800/20 backdrop-blur-sm border border-zinc-700/30 rounded-lg">
+      <div className="flex items-center gap-3 flex-1">
+        <div className="w-2 h-2 bg-zinc-500 rounded-full flex-shrink-0" />
+        <span className="text-sm font-medium text-white">{field.label}</span>
+        {field.validation?.required?.value && (
+          <span className="text-red-400 text-xs font-medium">*</span>
         )}
-        inputClassName="text-xs md:text-[12px] focus-visible:border-b-0 focus-visible:ring-0"
-        onChange={handleFormLabelChange}
-        inputPlaceholder="What's this field called?"
-      />
-      <div className="flex gap-1 items-center cursor-pointer transition-all duration-200">
-        <CustomTooltip tooltip={isDragging ? '' : 'Drag to reorder'}>
-          <Grip
-            className={cn(
-              'md:w-4 md:h-4 h-5 w-5 min-h-4 min-w-4 text-[#b6a2a2] cursor-grab focus:outline-none hover:scale-125',
-            )}
-            {...(listeners as SyntheticListenerMap)}
-            {...attributes}
-            ref={setActivatorNodeRef as LegacyRef<SVGSVGElement>}
-          />
-        </CustomTooltip>
-
-        <CustomTooltip tooltip={'Field Settings'}>
-          <Settings
-            className={cn('md:w-4 md:h-4 h-5 w-5 min-h-4 min-w-4 text-[#b6a2a2] focus:outline-none hover:scale-125')}
-            onClick={handleFieldSettingsClick}
-          />
-        </CustomTooltip>
-
-        <KebabMenu items={menuItems} />
-
-        <DeleteFieldModal
-          showTrigger={false}
-          fieldLabel={field?.label}
-          onConfirm={handleFieldDelete}
-          open={isDeleteModalOpen}
-          setOpen={setIsDeleteModalOpen}
-        />
+      </div>
+      
+      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-700/50"
+          onClick={handleFieldSettingsClick}
+        >
+          <Settings className="w-4 h-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-700/50"
+          onClick={handleFieldDelete}
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
       </div>
     </div>
   );

@@ -141,7 +141,7 @@ const SectionDisplay = () => {
   useAutoSaveFormConfig();
 
   return (
-    <main className="flex md:flex-row flex-col flex-nowrap bg-background w-[100dvw] h-[100dvh]">
+    <main className="flex md:flex-row flex-col flex-nowrap bg-gradient-to-br from-zinc-950 via-zinc-900 to-black w-[100dvw] h-[100dvh]">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -152,16 +152,16 @@ const SectionDisplay = () => {
         // onDragMove={handleDragMove}
       >
         {isLargeScreen && (
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel defaultSize={23} minSize={20} maxSize={28}>
+          <ResizablePanelGroup direction="horizontal" className="h-full">
+            <ResizablePanel defaultSize={22} minSize={18} maxSize={26}>
               {leftpane}
             </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel minSize={40} maxSize={80}>
+            <ResizableHandle withHandle className="bg-zinc-800/50 hover:bg-zinc-700/50 transition-colors" />
+            <ResizablePanel minSize={45} maxSize={75}>
               {centerpane}
             </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={23} minSize={20} maxSize={28}>
+            <ResizableHandle withHandle className="bg-zinc-800/50 hover:bg-zinc-700/50 transition-colors" />
+            <ResizablePanel defaultSize={22} minSize={18} maxSize={26}>
               {rightpane}
             </ResizablePanel>
           </ResizablePanelGroup>

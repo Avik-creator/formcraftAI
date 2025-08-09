@@ -1,80 +1,28 @@
+import React from 'react';
 import EditableText from '@/components/common/EditableText';
-import { useFormActionProperty, useFormProperty } from '@/zustand/store';
+import { useFormActionProperty, useFormProperty, useFormConfigStore } from '@/zustand/store';
 
 const FormHeaderContent = ({ pageId }: { pageId: string }) => {
-  const formTheme = useFormProperty('theme');
-  const formName = useFormProperty('name');
-  const formDescription = useFormProperty('description');
+  const formConfig = useFormConfigStore((s: any) => s.formConfig);
   const pageEntities = useFormProperty('pageEntities');
-  const fontFamily = useFormProperty("styles")?.fontFamily || "Poppins";
-  
 
-  const updateFormConfig = useFormActionProperty('updateFormConfig');
-  const updatePageName = useFormActionProperty('updatePageName');
+  const currentPage = pageEntities?.[pageId];
+
+  if (!formConfig || !currentPage) return null;
 
   return (
-    <div className="flex flex-col gap-1 px-2 w-full break-all" style={{fontFamily, letterSpacing:'normal !important'}}>
-      <EditableText
-        value={formName || ''}
-        renderText={(_, onClick) => (
-          <h3
-            className="border-b border-b-transparent min-w-12 min-h-6 font-bold text-xl tracking-tight cursor-pointer"
-            style={{ color: formTheme?.properties?.primaryTextColor }}
-            onClick={onClick}
-          >
-            {formName || <span className="opacity-75 text-muted-foreground">{"What's this form called?"}</span>}
-          </h3>
-        )}
-        inputClassName="font-bold text-xl tracking-tight"
-        onChange={(newValue) =>
-          updateFormConfig({
-            name: newValue,
-          })
-        }
-        inputPlaceholder="What's this form called?"
-      />
-
-      <EditableText
-        value={formDescription || ''}
-        renderText={(_, onClick) => (
-          <p
-            className="border-b border-b-transparent min-w-12 min-h-6 font-normal text-[13px] cursor-pointer"
-            style={{ color: formTheme?.properties?.primaryTextColor }}
-            onClick={onClick}
-          >
-            {formDescription || (
-              <span className="opacity-75 text-muted-foreground">{'Describe what this form does...'}</span>
-            )}
-          </p>
-        )}
-        inputClassName="font-normal text-[13px]"
-        onChange={(newValue) =>
-          updateFormConfig({
-            description: newValue,
-          })
-        }
-        inputPlaceholder="Describe what this form does..."
-      />
-
-      <div className="mt-3">
-        <EditableText
-          value={pageEntities?.[pageId]?.name as string}
-          renderText={(_, onClick) => (
-            <p
-              className="border-b border-b-transparent min-w-12 min-h-6 font-semibold text-[16px] cursor-pointer"
-              style={{ color: formTheme?.properties?.primaryTextColor }}
-              onClick={onClick}
-            >
-              {pageEntities?.[pageId]?.name || (
-                <span className="opacity-75 text-muted-foreground">{"What's this page called?"}</span>
-              )}
-            </p>
-          )}
-          inputClassName="font-semibold text-[16px]"
-          onChange={(newValue) => updatePageName(pageId, newValue)}
-          inputPlaceholder="What's this page called?"
-        />
-      </div>
+    <div className="mb-8 text-center">
+      <h1 className="text-3xl font-bold text-white mb-3">{formConfig.name}</h1>
+      {formConfig.description && (
+        <p className="text-zinc-300 text-lg leading-relaxed max-w-lg mx-auto">
+          {formConfig.description}
+        </p>
+      )}
+      {currentPage.name && currentPage.name !== 'Page' && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-white/90">{currentPage.name}</h2>
+        </div>
+      )}
     </div>
   );
 };

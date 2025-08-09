@@ -19,11 +19,13 @@ const FormCustomization = () => {
       title="Form Appearance"
       subtitle="Make your form look like your brand."
     >
-      <div className="flex flex-col gap-3 bg-background px-3 py-5 border border-input border-dashed rounded-md min-w-100">
+      <div className="flex flex-col gap-4 bg-background/30 px-3 py-4 border border-zinc-800 rounded-md min-w-100 bg-zinc-900/30 backdrop-blur-sm">
         <FormThemePicker />
+        <div className="grid grid-cols-2 gap-4">
+          <FormFontPrimaryColor />
+          <FormFontSecondaryColor />
+        </div>
         <FormFontPicker />
-        <FormFontPrimaryColor />
-        <FormFontSecondaryColor />
       </div>
     </FormConfigSection>
   );

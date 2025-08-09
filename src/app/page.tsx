@@ -23,7 +23,7 @@ const LINKS = {
     projectRepo: 'https://github.com/Avik-creator/form-craft',
     signin: '/sign-in',
     templates: '/templates',
-    dashboard: '/',
+    dashboard: '/dashboard',
     aiFormBuilder: `/sign-in?redirect_url=${getAppOriginUrl()}?ai-form-builder=1`,
     signup: '/sign-up',
     portfolio: 'https://avikmukherjee.me',

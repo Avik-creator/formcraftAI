@@ -8,7 +8,7 @@ import { useFormActionProperty, useFormProperty } from '@/zustand/store';
 
 const Header = () => {
   return (
-    <header className="flex flex-col pt-1 gap-2 sticky top-[-13px] pb-2 bg-[#0c0a0a] z-20">
+    <header className="flex flex-col pt-2 gap-3 sticky top-[-13px] pb-3 bg-black/60 backdrop-blur-sm z-20 border-b border-zinc-800/30">
       <FormName />
     </header>
   );
@@ -27,7 +27,7 @@ const FormName = () => {
       placeholder="What's this form called?"
       onChange={handleNameChange}
       value={name}
-      className="border-0 p-0 border-b-[1px] border-b-greyBorder rounded-none focus-visible:ring-0 font-bold tracking-tight text-white/80 text-lg"
+      className="border-0 p-0 border-b-[1px] border-b-zinc-700/50 rounded-none focus-visible:ring-0 font-bold tracking-tight text-white text-xl bg-transparent placeholder:text-zinc-500"
     />
   );
 };

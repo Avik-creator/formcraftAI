@@ -19,12 +19,12 @@ const FormField = ({
   helperText,
   renderLabelExtraContent,
 }: FormFieldProps) => {
-  const classes = cn('flex flex-col gap-1 my-1', className);
+  const classes = cn('flex flex-col gap-2 my-2', className);
   return (
     <Label className={classes} htmlFor={id}>
       <span
         className={cn(
-          'font-[700] gradient-text text-[15px] flex items-center tracking-tight',
+          'font-semibold text-[14px] sm:text-[15px] flex items-center tracking-tight text-zinc-200',
           helperText ? '' : 'mb-1',
         )}
       >
@@ -32,7 +32,7 @@ const FormField = ({
         {required && <sup className="top-[-0.1em] ml-[1px] font-bold text-red-500 text-sm">*</sup>}
         {renderLabelExtraContent?.()}
       </span>
-      {helperText && <p className="-mt-0.8 text-xs text-muted-foreground font-medium mb-1">{helperText}</p>}
+      {helperText && <p className="-mt-0.5 text-xs text-zinc-400 font-medium mb-1">{helperText}</p>}
       {children}
     </Label>
   );

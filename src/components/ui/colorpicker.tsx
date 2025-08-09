@@ -25,13 +25,19 @@ const ColorPicker = ({
       <PopoverTrigger  className={cn("flex flex-col items-center w-10", triggerClassName)}>
         <div
           title={color}
-          className={cn("shadow-md rounded-md w-8 h-8 transition-colors min-w-6 min-h-6 border border-[#484848]", className)}
+          className={cn("shadow-sm rounded-md w-8 h-8 transition-colors min-w-6 min-h-6 border border-zinc-700", className)}
           style={{ backgroundColor: color }}
         />
-        {showLabel && <input className="bg-transparent mx-2 border-none max-w-14 text-foreground text-xs outline-none" value={color} onChange={(e) => onChange(e.target.value)} />}
+        {showLabel && (
+          <input
+            className="bg-transparent mx-2 border-none max-w-20 text-zinc-200 text-xs outline-none"
+            value={color}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
       </PopoverTrigger>
 
-      <PopoverContent align="start" alignOffset={15} className="p-0">
+      <PopoverContent align="start" alignOffset={15} className="p-2 bg-zinc-900/95 border-zinc-800">
         <HexColorPicker color={color} onChange={onChange} />
       </PopoverContent>
     </Popover>

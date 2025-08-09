@@ -27,9 +27,9 @@ export const createNewFormSubmissionAction = async (data: FormSubmissionModelTyp
         existingSubmission.set('data', data?.data);
         existingSubmission.set('status', data?.status);
   
-        const res = await existingSubmission.save();
-  
-        return { success: true, data: convertToPlainObject(res) };
+                const res = await existingSubmission.save();
+
+        return { success: true, data: await convertToPlainObject(res) };
       } else {
         const newSubmission = await FormSubmission.create({
           formId: data?.formId,
@@ -38,9 +38,9 @@ export const createNewFormSubmissionAction = async (data: FormSubmissionModelTyp
           status: data?.status,
         });
   
-        const res = await newSubmission.save();
-  
-        return { success: true, data: convertToPlainObject(res) };
+                const res = await newSubmission.save();
+
+        return { success: true, data: await convertToPlainObject(res) };
       }
     } catch (error) {
       if (error instanceof Error) return { success: false, error: error?.message };
@@ -65,7 +65,7 @@ export const createNewFormSubmissionAction = async (data: FormSubmissionModelTyp
         submissions: res as unknown as FormSubmissionModelType[],
       };
   
-      return { success: true, data: convertToPlainObject(data) as unknown as typeof data };
+      return { success: true, data: await convertToPlainObject(data) as unknown as typeof data };
     } catch (error) {
       if (error instanceof Error) return { success: false, error: error?.message };
     }

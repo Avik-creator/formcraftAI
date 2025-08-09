@@ -9,7 +9,7 @@ const BaseBadge = ({ className, children }: { className?: string; children: Reac
         className,
       )}
     >
-      <span className="font-normal text-[9px] flex items-center gap-1 gradient-text-light">{children}</span>
+      <span className="font-normal text-[9px] flex items-center gap-1 bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">{children}</span>
     </span>
   );
 };
@@ -23,7 +23,7 @@ export default ComingSoonBadge;
 export const NewFeatureBadge = ({ className, childrenClass }: { className?: string; childrenClass?: string }) => {
   return (
     <BaseBadge className={cn('bg-orange-400/70 border border-green-700/50 rounded-3xl animate-pulse', className)}>
-      <span className={cn('text-[12px] font-semibold flex items-center gap-1 gradient-text', childrenClass)}>New!</span>
+      <span className={cn('text-[12px] font-semibold flex items-center gap-1 bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400', childrenClass)}>New!</span>
     </BaseBadge>
   );
 };

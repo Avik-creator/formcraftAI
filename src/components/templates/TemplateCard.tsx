@@ -34,8 +34,8 @@ const TemplateCard = ({ template, onPreview }: TemplateCardProps) => {
   return (
     <Card
       className={cn(
-        'glass-card border-zinc-800/50 gradient-border hover-lift shadow-lg',
-        'hover:border-zinc-700/50 transition-all duration-300 group',
+        'backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg',
+        'hover:-translate-y-1 hover:border-zinc-700/50 transition-transform duration-300 group',
         'overflow-hidden',
       )}
     >
@@ -52,7 +52,7 @@ const TemplateCard = ({ template, onPreview }: TemplateCardProps) => {
 
       <CardHeader className="space-y-0.5">
         <CardTitle className="flex items-center justify-between w-full gap-4" onClick={() => onPreview?.(template)}>
-          <h2 className="text-base md:text-lg max-w-[90%] gradient-text flex items-center group transition-all duration-300">
+          <h2 className="text-base md:text-lg max-w-[90%] bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400 flex items-center group transition-all duration-300">
             {meta.name}
             <ArrowRight className="w-4 h-4 inline ml-2 group-hover:opacity-100 opacity-0" />
           </h2>

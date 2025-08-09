@@ -31,7 +31,7 @@ export const createNewTemplateAction = async (meta: TemplateModel['meta'], templ
 
     const res = await newTemplate.save();
 
-    return { success: true, data: convertToPlainObject(res?.toJSON()) };
+    return { success: true, data: await convertToPlainObject(res?.toJSON()) };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
 
@@ -45,7 +45,7 @@ export const getAllTemplatesAction = async () => {
     // select all templates where templateConfig.createdBy = 'SYSTEM'
     const templates = await FormTemplate.find({ 'templateConfig.createdBy': 'SYSTEM' })?.lean();
 
-    return { success: true, data: convertToPlainObject(templates) as FormTemplateType[] };
+    return { success: true, data: await convertToPlainObject(templates) as unknown as FormTemplateType[] };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
     return { success: false, error: error };
@@ -56,7 +56,7 @@ export const deleteAllTemplatesAction = async () => {
   try {
     await connectDb();
     const res = await FormTemplate.deleteMany({ 'templateConfig.createdBy': 'SYSTEM' });
-    return { success: true, data: convertToPlainObject(res) };
+    return { success: true, data: await convertToPlainObject(res) };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
     return { success: false, error: error };

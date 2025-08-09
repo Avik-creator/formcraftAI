@@ -24,7 +24,7 @@ const CenterPane = ({ className, activeField }: CenterPaneProps) => {
   const scrollTop = useRef(0);
 
   const classes = cn(
-    "h-full relative overflow-auto bg-background flex flex-col items-center py-12 px-4 center-pane",
+    "h-full relative overflow-auto bg-gradient-to-br from-zinc-900/50 to-black/50 backdrop-blur-sm flex flex-col items-center py-12 px-6",
     className
   );
 

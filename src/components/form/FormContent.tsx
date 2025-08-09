@@ -59,7 +59,9 @@ const FormContent = ({
   const formValues = useWatch({ control: form.control });
 
   const fieldEntitiesWithNameKeys = useMemo(() => {
-    return Object.values(formConfig?.fieldEntities)?.reduce((acc, field) => {
+    const entities = formConfig?.fieldEntities || {};
+    return Object.values(entities)?.reduce((acc, field) => {
+      if (!field) return acc;
       acc[field?.name] = field;
       return acc;
     }, {} as { [key: string]: FieldEntity });
@@ -104,7 +106,7 @@ const FormContent = ({
         className="mt-1 flex flex-col gap-3 w-full transition-all duration-200 ease-in-out"
         onSubmit={form.handleSubmit(handleFormSubmit, (errors) => console.log(JSON.stringify(errors, null, 2)))}
       >
-        <FormPageName name={activePage?.name} color={formConfig?.theme?.properties?.primaryTextColor} />
+        <FormPageName name={activePage?.name} color={formConfig?.theme?.properties?.primaryTextColor || '#ffffff'} />
         <FormFieldContainer
           activePage={activePage}
           formConfig={formConfig}

@@ -40,7 +40,7 @@ const Form = ({ formConfig: config }: FormProps) => {
   const [isSubmissionSuccess, setIsSubmissionSuccess] = React.useState(false);
 
   const [fieldVisibilityMap, setFieldVisibiltyMap] = React.useState<Record<string, boolean>>({});
-  const allFields = useMemo(() => Object.keys(formConfig.fieldEntities), [formConfig?.fieldEntities]);
+  const allFields = useMemo(() => Object.keys(formConfig?.fieldEntities || {}), [formConfig?.fieldEntities]);
 
   const formSubmissionId = useFormSubmissionId();
 
@@ -204,7 +204,7 @@ const Form = ({ formConfig: config }: FormProps) => {
     return (
       <section
         className={'m-auto relative z-[2] text-center grid gap-1'}
-        style={{ backgroundColor: formConfig?.theme?.properties?.formBackgroundColor, fontFamily }}
+        style={{ backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000', fontFamily }}
       >
         <h3 className="font-bold text-white text-xl sm:text-3xl">Thank you!</h3>
         <p className="text-white/90 text-sm sm:text-xl">Your form has been successfully submitted.</p>
@@ -220,7 +220,7 @@ const Form = ({ formConfig: config }: FormProps) => {
     <section
       className={classes}
       style={{
-        backgroundColor: formConfig?.theme?.properties?.formBackgroundColor,
+        backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000',
         boxShadow: '1px 1px 20px 4px #130d18',
         borderRadius: 20,
         fontFamily

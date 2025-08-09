@@ -160,9 +160,9 @@ const FormStructure = () => {
       title="Form Structure"
       subtitle="Quickly add, reorder and remove fields in your form."
     >
-      <div className="flex flex-col gap-3 border-input bg-background px-3 py-5 border border-dashed rounded-md min-w-100 min-h-[400px]">
+      <div className="flex flex-col gap-4 bg-zinc-900/30 backdrop-blur-sm px-4 py-6 border border-zinc-800/50 rounded-lg min-w-100 min-h-[400px]">
         <AddFieldModal />
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-4">
           <DndContext
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}
@@ -214,7 +214,7 @@ const FormStructure = () => {
           </DndContext>
         </section>
         <Button
-          className="bg-zinc-900 hover:bg-zinc-800 mt-3 w-full text-foreground transition-colors"
+          className="bg-zinc-800/50 hover:bg-zinc-700/50 mt-2 w-full text-white border border-zinc-700/50 transition-colors"
           onClick={handleAddPage}
         >
           Add Page

@@ -5,6 +5,7 @@ import { LegacyRef } from 'react';
 import { FieldEntity } from '@/types/index';
 import { cn } from '@/lib/utils';
 import CustomTooltip from '@/components/ui/custom-tooltip';
+import { Button } from '@/components/ui/button';
 
 type DraggableFieldProps = {
   id: string;
@@ -17,71 +18,49 @@ type DraggableFieldProps = {
 };
 
 const DraggableField = ({ label, id, isOverlay, draggedOverPosition, onFieldSettingsClick }: DraggableFieldProps) => {
-  const {
-    attributes,
-    isDragging,
-    isOver,
-    isSorting,
-    listeners,
-    setNodeRef,
-    setActivatorNodeRef,
-    transform,
-    transition,
-  } = useSortable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
-    data: { type: 'form_field', id },
-    transition: {
-      duration: 150, // milliseconds
-      easing: 'cubic-bezier(0.42, 0, 0.58, 1)', // Using ease-in-out
+    data: {
+      type: 'form_field',
     },
   });
 
-  const styles: React.CSSProperties = {
-    transform: isSorting ? undefined : CSS.Translate.toString(transform),
-    zIndex: isDragging ? 100 : undefined,
-    opacity: isOver ? 0.6 : 1,
+  const style = {
+    transform: CSS.Transform.toString(transform),
     transition,
   };
 
-  if (isDragging && !isOverlay) return null;
+  const classes = cn(
+    'group relative flex items-center justify-between gap-3 p-3 rounded-lg border transition-all duration-200',
+    'bg-zinc-800/30 backdrop-blur-sm border-zinc-700/50',
+    'hover:bg-zinc-700/30 hover:border-zinc-600/50',
+    'cursor-grab active:cursor-grabbing',
+    {
+      'opacity-50': isDragging,
+      'border-blue-500/50 bg-blue-500/10': isOverlay,
+      'border-green-500/50 bg-green-500/10': draggedOverPosition === 'top',
+      'border-purple-500/50 bg-purple-500/10': draggedOverPosition === 'bottom',
+    },
+  );
 
   return (
-    <>
-      <div
-        id={isOverlay ? `overlay-${id}` : id}
-        className={cn(
-          'flex justify-between items-center gap-3 border-2 border-input/35 px-3 py-2 rounded-md min-h-6 transition-all duration-300',
-          {
-            'border-t-yellow-200': isOver && draggedOverPosition === 'top',
-            'border-b-yellow-200': isOver && draggedOverPosition === 'bottom',
-
-            'bg-black border-zinc-800': isOverlay,
-          },
-        )}
-        style={styles}
-        ref={setNodeRef}
-      >
-        <p className="font-semibold text-foreground text-sm">{label}</p>
-        <div className="flex items-center gap-2">
-          <CustomTooltip tooltip="Field Settings">
-            <Settings
-              className="hover:opacity-60 w-4 min-w-4 h-6 min-h-6 text-[#b6a2a2] cursor-pointer"
-              onClick={() => onFieldSettingsClick?.(id)}
-            />
-          </CustomTooltip>
-          <CustomTooltip tooltip={isDragging || isOverlay ? null : 'Drag to reorder'}>
-            <Grip
-              className={cn('w-4 min-w-4 h-6 min-h-6 text-[#b6a2a2] cursor-grab focus:outline-none', {
-                'cursor-grabbing': isDragging || isOverlay,
-              })}
-              ref={setActivatorNodeRef as LegacyRef<SVGSVGElement>}
-              {...listeners}
-              {...attributes}
-            />
-          </CustomTooltip>
-        </div>
+    <div ref={setNodeRef} style={style} className={classes}>
+      <div className="flex items-center gap-3 flex-1" {...attributes} {...listeners}>
+        <div className="w-2 h-2 bg-zinc-500 rounded-full flex-shrink-0" />
+        <span className="text-sm font-medium text-white truncate">{label}</span>
       </div>
-    </>
+      
+      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-7 w-7 p-0 text-zinc-400 hover:text-white hover:bg-zinc-700/50"
+          onClick={() => onFieldSettingsClick(id)}
+        >
+          <Settings className="w-3 h-3" />
+        </Button>
+      </div>
+    </div>
   );
 };
 

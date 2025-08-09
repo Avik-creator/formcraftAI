@@ -18,7 +18,7 @@ export const createFormConfigAction = async () => {
 
     return {
       success: true,
-      data: convertToPlainObject(res) as FormConfig,
+      data: await convertToPlainObject(res) as FormConfig,
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
@@ -78,7 +78,7 @@ export const getAllUserFormsAction = async () => {
 
     return {
       success: true,
-      data: convertToPlainObject(forms),
+      data: await convertToPlainObject(forms),
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
@@ -102,7 +102,7 @@ export const deleteFormAction = async (id: string) => {
 
     return {
       success: true,
-      data: convertToPlainObject(res),
+      data: await convertToPlainObject(res),
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
@@ -126,7 +126,7 @@ export const updateFormConfigAction = async (id: string, update: Partial<FormCon
 
     return {
       success: true,
-      data: convertToPlainObject(res),
+      data: await convertToPlainObject(res),
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
@@ -147,7 +147,7 @@ export const publishFormAction = async (id: string) => {
 
     return {
       success: true,
-      data: convertToPlainObject(res),
+      data: await convertToPlainObject(res),
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
@@ -166,9 +166,40 @@ export const getFormConfigWithIdAction = async (id: string) => {
 
     if (res?.status !== 'published') throw new Error('This form is not published yet. Please contact its owner.');
 
+    // Ensure theme is properly set with defaults if missing
+    const formData = await convertToPlainObject(res) as unknown as FormConfig;
+    
+    // Ensure all required properties are present with defaults
+    if (!formData.fieldEntities) {
+      formData.fieldEntities = {};
+    }
+    
+    if (!formData.pageEntities) {
+      formData.pageEntities = {};
+    }
+    
+    if (!formData.pages) {
+      formData.pages = [];
+    }
+    
+    if (!formData.theme || Object.keys(formData.theme).length === 0) {
+      formData.theme = {
+        type: 'midnight-black',
+        id: 'midnight-black',
+        properties: {
+          formBackgroundColor: '#000000',
+          primaryTextColor: '#ffffff',
+          secondaryTextColor: '#a1a1aa',
+          inputPlaceholderColor: '#71717a',
+          inputBorderColor: '#3f3f46',
+          borderRadius: '8px',
+        },
+      };
+    }
+
     return {
       success: true,
-      data: convertToPlainObject(res) as unknown as FormConfig,
+      data: formData,
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error: error?.message };
