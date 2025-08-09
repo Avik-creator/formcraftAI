@@ -52,6 +52,7 @@ export const FieldName = memo(() => {
         defaultValue={selectedField?.name ?? selectedField?.label?.toLowerCase()?.replaceAll(' ', '-') ?? ''}
         readOnly
         disabled
+        className='text-white'
       />
     </FormFieldWrapper>
   );
@@ -100,6 +101,7 @@ export const FieldPlaceholder = memo(() => {
         defaultValue={selectedField?.placeholder ?? ''}
         placeholder="Eg: Enter something here..."
         onChange={handlePropertyChange('placeholder')}
+        className='text-white'
       />
     </FormFieldWrapper>
   );
@@ -113,7 +115,7 @@ export const FieldLabel = memo(() => {
 
   return (
     <FormFieldWrapper id="label" label="Field Label" required helperText="What's this field called?">
-      <Textarea value={selectedField?.label} onChange={handlePropertyChange('label')} />
+      <Textarea value={selectedField?.label} onChange={handlePropertyChange('label')} className="text-white" />
     </FormFieldWrapper>
   );
 });
@@ -126,7 +128,7 @@ export const FieldHelperText = memo(() => {
 
   return (
     <FormFieldWrapper id="helperText" label="Helper Text" helperText="Any additional helper text for the field">
-      <Textarea value={selectedField?.helperText} onChange={handlePropertyChange('helperText')} />
+      <Textarea value={selectedField?.helperText} onChange={handlePropertyChange('helperText')} className="text-zinc-300" />
     </FormFieldWrapper>
   );
 });
@@ -147,6 +149,7 @@ export const FieldDefaultValue = memo(() => {
           <Input
             defaultValue={(selectedField?.defaultValue as string) ?? ''}
             onChange={handlePropertyChange('defaultValue')}
+            className="text-white"
           />
         );
       case 'textarea':
@@ -154,6 +157,7 @@ export const FieldDefaultValue = memo(() => {
           <Textarea
             defaultValue={(selectedField?.defaultValue as string) ?? ''}
             onChange={handlePropertyChange('defaultValue')}
+            className="text-white"
           />
         );
       case 'date':
@@ -273,17 +277,17 @@ export const FieldOptionsForm = memo(() => {
   const renderActionButton = (Icon: React.ElementType, title: string, onClick: () => void, className?: string) => {
     return (
       <CustomTooltip tooltip={title} className={className}>
-        <span
-          tabIndex={0}
+        <button
+          type="button"
           aria-label={title}
-          aria-roledescription={title}
-          role="button"
-          className={cn('cursor-pointer bg-white text-black rounded-full h-full p-1 inline-block', className)}
+          className={cn(
+            'inline-flex items-center justify-center w-7 h-7 rounded-full border border-zinc-700/60 bg-zinc-800/60 text-white hover:bg-zinc-700/60 transition-colors',
+            className,
+          )}
           onClick={onClick}
-          onKeyDown={(e) => e.key === 'Enter' && onClick()}
         >
           <Icon className="w-4 h-4" />
-        </span>
+        </button>
       </CustomTooltip>
     );
   };
@@ -293,7 +297,7 @@ export const FieldOptionsForm = memo(() => {
       <form onSubmit={form.handleSubmit((data) => console.log(data))}>
         <FormFieldWrapper id="options" label="Options" helperText="Add options for the field" required>
           {fields?.map((field, index) => (
-            <div className="flex items-center gap-3 mb-3" key={field.id}>
+            <div className="flex items-center gap-3 mb-3 bg-zinc-900/40 border border-zinc-800/50 rounded-md p-2" key={field.id}>
               <FormField
                 control={form.control}
                 name={`options.${index}.label`}
@@ -303,27 +307,12 @@ export const FieldOptionsForm = memo(() => {
                 render={({ field: rhfField }) => (
                   <FormControl>
                     <div className="flex flex-col gap-2 space-x-2 w-full">
-                      <Input {...rhfField} value={rhfField.value as string} placeholder='Label e.g "Option 1"' />
+                      <Input {...rhfField} value={rhfField.value as string} placeholder='Label e.g "Option 1"' className="text-white" />
                       <FormMessage />
                     </div>
                   </FormControl>
                 )}
               />
-              {/* <FormField
-                control={form.control}
-                name={`options.${index}.value`}
-                rules={{
-                  required: 'Value is required',
-                }}
-                render={({ field: rhfField }) => (
-                  <FormControl>
-                    <div className="flex flex-col gap-2 space-x-2">
-                      <Input {...rhfField} value={rhfField.value as string} placeholder='Value e.g "option-1' />
-                      <FormMessage />
-                    </div>
-                  </FormControl>
-                )}
-              /> */}
               {renderActionButton(
                 Plus,
                 'Add Option',
@@ -334,25 +323,27 @@ export const FieldOptionsForm = memo(() => {
                 Trash,
                 'Remove Option',
                 () => remove(index),
-                cn('bg-red-500 text-white self-center', form.formState.errors?.options?.[index] && 'self-start mt-1'),
+                cn('self-center bg-red-500/80 hover:bg-red-500 text-white border-red-500/50', form.formState.errors?.options?.[index] && 'self-start mt-1'),
               )}
             </div>
           ))}
-          {fields?.length === 0 && <div className="flex items-center gap-3 ">No Options</div>}
-          <Button className="mb-2" type="submit" variant="default" onClick={() => append(defaultOptions[0])}>
-            Add Option
-          </Button>
-          <Button
-            type="submit"
-            variant="secondary"
-            onClick={() =>
-              handlePropertyChangeWithValue('options')(
-                form.getValues('options')?.map((option) => ({ ...option, value: option.label })) as Option[],
-              )
-            }
-          >
-            Save Changes
-          </Button>
+          {fields?.length === 0 && <div className="flex items-center gap-3 text-zinc-500 text-sm">No Options</div>}
+          <div className="flex items-center gap-2">
+            <Button className="mb-2" type="submit" variant="default" onClick={() => append(defaultOptions[0])}>
+              Add Option
+            </Button>
+            <Button
+              type="submit"
+              variant="secondary"
+              onClick={() =>
+                handlePropertyChangeWithValue('options')(
+                  form.getValues('options')?.map((option) => ({ ...option, value: option.label })) as Option[],
+                )
+              }
+            >
+              Save Changes
+            </Button>
+          </div>
         </FormFieldWrapper>
       </form>
     </Form>
