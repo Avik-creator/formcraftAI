@@ -25,9 +25,6 @@ export const metadata: Metadata = {
   creator: "Avik Mukherjee",
   metadataBase: new URL("https://formcraftai.avikmukherjee.me"),
 
-  verification: {
-    google: process.env.GOOGLE_VERIFICATION_ID
-  },
   openGraph:{
     title: "FormCraft AI",
     description: "Want to create a form? FormCraft AI is here to help you generate forms with AI.",
@@ -48,9 +45,9 @@ export const metadata: Metadata = {
 
   },
   icons:{
-    icon: "/logo.webp",
-    shortcut: "/logo.webp",
-    apple: "/logo.webp",
+    icon: "/icon.ico",
+    shortcut: "/icon.ico",
+    apple: "/icon.ico",
   }
 };
 
