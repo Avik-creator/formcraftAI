@@ -1,21 +1,21 @@
 import React from 'react';
-import EditableText from '@/components/common/EditableText';
-import { useFormActionProperty, useFormProperty, useFormConfigStore } from '@/zustand/store';
+import { useFormProperty } from '@/zustand/store';
 
 const FormHeaderContent = ({ pageId }: { pageId: string }) => {
-  const formConfig = useFormConfigStore((s: any) => s.formConfig);
   const pageEntities = useFormProperty('pageEntities');
+  const formName = useFormProperty('name');
+  const formDescription = useFormProperty('description');
 
   const currentPage = pageEntities?.[pageId];
 
-  if (!formConfig || !currentPage) return null;
+  if (!currentPage) return null;
 
   return (
     <div className="mb-8 text-center">
-      <h1 className="text-3xl font-bold text-white mb-3">{formConfig.name}</h1>
-      {formConfig.description && (
+      <h1 className="text-3xl font-bold text-white mb-3">{formName ?? ''}</h1>
+      {formDescription && (
         <p className="text-zinc-300 text-lg leading-relaxed max-w-lg mx-auto">
-          {formConfig.description}
+          {formDescription}
         </p>
       )}
       {currentPage.name && currentPage.name !== 'Page' && (

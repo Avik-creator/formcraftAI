@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Header from '@/components/dashboard/Header';
 import TabsContainer from '@/components/dashboard/TabsContainer';
 
@@ -17,7 +17,9 @@ const Layout = ({ children }: DashboardLayoutProps) => {
 
       {/* Content container */}
       <div className="relative w-screen h-screen flex flex-col py-3 sm:px-6 px-3 gap-4 max-w-screen-[1700px] mx-auto overflow-auto z-10">
-        <Header />
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
         <TabsContainer>{children}</TabsContainer>
       </div>
     </main>

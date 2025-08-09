@@ -1,12 +1,11 @@
 import React from 'react';
 import FormHeaderContent from './FormHeader';
 import SortableFormFieldContainer, { FormFieldsProps } from './SortableFormFieldContainer';
-import { useFormProperty, useFormConfigStore } from '@/zustand/store';
+import { useFormProperty } from '@/zustand/store';
 
 const FormContent = (props: FormFieldsProps) => {
-  const { activeField, pageId, isLastPage } = props;
+  const { pageId } = props;
   const activePage = useFormProperty('pageEntities')?.[pageId];
-  const formConfig = useFormConfigStore((s: any) => s.formConfig);
 
   if (!activePage) return null;
 

@@ -1,4 +1,4 @@
-import { createFormSubmission, getFormSubmissions } from '@/data-fetching/functions/formSubmission';
+import { createFormSubmission, getFormSubmissions, type FormSubmissionResponse } from '@/data-fetching/functions/formSubmission';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useCreateFormSubmissionMutation = ({
@@ -7,14 +7,14 @@ export const useCreateFormSubmissionMutation = ({
   onError,
 }: {
   onMutate?: () => string;
-  onSuccess?: (data: Record<string, unknown>, context: string) => void;
+  onSuccess?: (data: FormSubmissionResponse, context: string) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createFormSubmission,
     onMutate,
     onSuccess: (data, _, context) => {
-      onSuccess?.(data, context);
+      onSuccess?.(data as FormSubmissionResponse, context as string);
     },
     onError,
   });

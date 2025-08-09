@@ -17,7 +17,7 @@ export const useCreateActivityMutation = ({
     mutationFn: createNewActivity,
     onMutate,
     onSuccess: (data, _, context) => {
-      onSuccess?.(data, context);
+      onSuccess?.(data as ActivityModelType, context as string);
     },
     onError,
   });

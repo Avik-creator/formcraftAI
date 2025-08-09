@@ -40,7 +40,7 @@ const activityTypeMap = {
 
 const RecentActivity = async () => {
   const res = await getAllActivitiesFromLastWeekAction();
-  const activities = res?.data ?? [];
+  const activities = (res?.data ?? []) as ActivityModelType[];
 
   const renderActivity = (activity: ActivityModelType) => {
     const formattedTime = formatDistanceToNow(new Date(activity.createdAt), {

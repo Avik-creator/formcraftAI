@@ -2,7 +2,7 @@ import { getMostActiveFormAction } from '@/backend/actions/analytics';
 import InfoCard from './InfoCard';
 import { StarFilledIcon } from '@radix-ui/react-icons';
 
-export const revalidate = 10;
+// Removed invalid segment config from a component file
 
 const MostActiveForm = async () => {
   const res = await getMostActiveFormAction();

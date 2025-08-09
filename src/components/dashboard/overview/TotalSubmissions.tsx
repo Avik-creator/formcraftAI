@@ -2,7 +2,7 @@ import { getTotalSubmissionCountAction } from '@/backend/actions/analytics';
 import InfoCard from './InfoCard';
 import { ClipboardList } from 'lucide-react';
 
-export const revalidate = 10;
+// Removed invalid segment config from a component file
 
 const TotalSubmissions = async () => {
   const res = await getTotalSubmissionCountAction();

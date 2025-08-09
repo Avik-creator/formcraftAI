@@ -2,7 +2,7 @@ import { getAverageCompletionRateAction } from '@/backend/actions/analytics';
 import InfoCard from './InfoCard';
 import { CirclePercent } from 'lucide-react';
 
-export const revalidate = 10;
+// Removed invalid segment config from a component file
 
 const AverageCompletionRate = async () => {
   const res = await getAverageCompletionRateAction();

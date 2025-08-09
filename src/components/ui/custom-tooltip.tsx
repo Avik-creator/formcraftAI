@@ -12,7 +12,7 @@ const CustomTooltip = ({ tooltip, children, className, triggerClassName, ...prop
   return (
     <TooltipProvider delayDuration={100}>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild className={triggerClassName}>
           {/* Do NOT render a button wrapper here to avoid nested buttons */}
           {children}
         </TooltipTrigger>

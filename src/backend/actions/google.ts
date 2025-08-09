@@ -17,17 +17,14 @@ export const getAllFontsAction = async () => {
   try {
     const apiKey = process.env.GOOGLE_FONTS_API_KEY;
 
-
-
     if (!apiKey) {
       return { success: true, data: fallback };
     }
 
     const res = await fetch(
       `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`,
-      { cache: 'no-store', next: { revalidate: 0 } as any },
+      { cache: 'no-store', next: { revalidate: 0 } },
     );
-
 
     if (!res.ok) {
       return { success: true, data: fallback };

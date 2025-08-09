@@ -2,7 +2,7 @@ import TopHeader from '@/components/common/TopHeader';
 import SectionDisplay from '@/components/builder/SectionDisplay';
 import { FormSectionDisplayProvider } from '@/hooks/useFormSectionDisplayProvider';
 
-export const revalidate = Infinity;
+export const revalidate = 0;
 
 const FormBuilderPage = async () => {
   return (

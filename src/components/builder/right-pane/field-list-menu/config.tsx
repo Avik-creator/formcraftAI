@@ -1,6 +1,6 @@
 import { CheckboxIcon } from '@radix-ui/react-icons';
 import { SelectIcon } from '@radix-ui/react-select';
-import { CalendarIcon, CircleDot, File, FormInputIcon, Notebook, TextIcon } from 'lucide-react';
+import { CalendarIcon, CircleDot, FormInputIcon, Notebook, TextIcon } from 'lucide-react';
 
 const sections = [
   {
