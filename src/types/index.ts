@@ -84,6 +84,20 @@ export type FormConfigWithMeta = {
   export type FieldType = 'text' | 'checkbox' | 'radio' | 'dropdown' | 'date' | 'textarea' | 'file';
   
   export type CustomValidationType = 'withValue' | 'binary';
+
+  // Custom validation value shapes
+  export interface WithValueCustomValidation {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any;
+    message: string;
+    type: 'withValue';
+  }
+
+  export interface BinaryCustomValidation {
+    value?: boolean;
+    message?: string;
+    type: 'binary';
+  }
   
   export interface FieldValidation {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -93,15 +107,7 @@ export type FormConfigWithMeta = {
       value: boolean; // Whether the field is required
       message: string; // Custom error message for required field
     };
-    custom?: Record<
-      string, // A unique key for the custom validation
-      {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value: any; // The validation value (criteria)
-        message: string; // The custom error message for this validation
-        type: CustomValidationType;
-      }
-    >;
+    custom?: Record<string, WithValueCustomValidation | BinaryCustomValidation>;
   }
   
   export interface FieldOption {

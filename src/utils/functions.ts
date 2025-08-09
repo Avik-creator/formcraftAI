@@ -3,3 +3,7 @@ export const getAppOriginUrl = () => {
       return process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process?.env?.NEXT_PUBLIC_APP_URL || '';
     return window.location.origin;
   };
+
+export const copyToClipboard = (text: string) => {
+  return navigator.clipboard.writeText(text);
+};
