@@ -114,10 +114,11 @@ const useFonts = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     select(data) {
-      return data?.items?.slice(0, 100)?.map((d: Record<string, string>) => ({
-        label: d?.family,
-        value: d?.family,
-      }));
+      const items = (data?.items ?? []) as Array<Record<string, string>>;
+      const mapped = items.map((d) => ({ label: d?.family, value: d?.family }));
+      // Sort alphabetically for better search UX
+      mapped.sort((a, b) => a.label.localeCompare(b.label));
+      return mapped;
     },
   });
   return query;
@@ -140,10 +141,10 @@ const FormFontPicker = () => {
     [updateFormStyles]
   );
 
-  const selectedFont = useMemo(
-    () => [data?.find((d: Option) => d?.value === (fontFamily || "Poppins"))],
-    [data, fontFamily]
-  );
+  const selectedFont = useMemo(() => {
+    const found = (data || []).find((d: Option) => d?.value === (fontFamily || 'Poppins'));
+    return found ? [found] : [];
+  }, [data, fontFamily]);
 
   useDynamicFontLoader(fontFamily);
 
@@ -165,9 +166,9 @@ const FormFontPicker = () => {
       {!isLoading && (
         <Combobox
           handleChange={handleFontChange}
-          selectedValues={selectedFont}
+          selectedValues={selectedFont as Option[]}
           allowMultiple={false}
-          options={data}
+          options={(data as Option[]) || []}
         />
       )}
     </FormField>

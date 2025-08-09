@@ -82,7 +82,7 @@ const FormCard = ({
           <CardDescription className="-mt-6 text-xs text-zinc-300">{description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Link prefetch href={submissions > 0 ? `/forms/${id}` : ''} className="font-semibold group">
+          <Link prefetch href={submissions > 0 ? `/dashboard/forms/${id}` : ''} className="font-semibold group">
             <span className="font-bold text-2xl">{submissions}</span> <span className="text-zinc-300">submissions</span>
             {submissions > 0 && <ArrowRight className="w-4 h-4 inline ml-2" aria-label="View Submissions" />}
           </Link>
