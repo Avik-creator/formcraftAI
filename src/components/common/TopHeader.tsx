@@ -144,20 +144,20 @@ const PublishedFormModal = ({ open, setOpen }: { open: boolean; setOpen: (open: 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent className='bg-zinc-900/30 backdrop-blur-sm border border-zinc-800/50 rounded-xl overflow-hidden shadow-xl'>
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">Form published successfully!</DialogTitle>
           <DialogDescription>You can now start accepting submissions.</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col md:flex-row gap-2 items-center">
-          <Input placeholder="Form name" readOnly value={formLink} disabled />
+          <Input placeholder="Form name" className='text-white outline-none'readOnly value={formLink} disabled />
           <Button
             variant={'default'}
             size={'sm'}
             onClick={() => handleCopy(formLink, () => toast.error('Failed to copy'))}
           >
-            {hasCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+            {hasCopied ? <Check className="h-4 w-4 mr-2 text-white" /> : <Copy className="h-4 w-4 mr-2 text-white" />}
             {hasCopied ? 'Copied' : 'Copy link'}
           </Button>
         </div>

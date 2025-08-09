@@ -204,27 +204,20 @@ export const getFormSubmissionRateOverTimeAction = async () => {
         $group: {
           _id: {
             $dateToString: {
-              format: '%B',
+              // Use numeric month (01-12) for broad MongoDB compatibility
+              format: '%m',
               date: '$createdAt',
             },
           },
           count: { $sum: 1 },
         },
       },
-      // {
-      //   // $addFields: {
-      //   //   $_id: '$count',
-      //   // },
-      // },
-
-      {
-        $sort: {
-          _id: 1,
-        },
-      },
     ]);
 
-    const months = [
+    const monthCodes = [
+      '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
+    ];
+    const monthNames = [
       'January',
       'February',
       'March',
@@ -239,9 +232,9 @@ export const getFormSubmissionRateOverTimeAction = async () => {
       'December',
     ];
 
-    const formattedData = months?.map((data) => ({
-      month: data,
-      submissions: formSubmissions?.find((fs) => fs?._id === data)?.count || 0,
+    const formattedData = monthCodes.map((code, idx) => ({
+      month: monthNames[idx],
+      submissions: formSubmissions?.find((fs) => fs?._id === code)?.count || 0,
     }));
 
     return {
