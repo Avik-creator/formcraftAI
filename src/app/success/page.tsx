@@ -52,7 +52,7 @@ function SuccessContent() {
       <div className="mt-6 flex items-center justify-center gap-2 text-xs text-zinc-500">
         <Info className="h-3.5 w-3.5" />
         <span>
-          Keep this tab open for a few seconds if Pro isn't active yet. We apply upgrades as soon as webhooks arrive.
+          Keep this tab open for a few seconds if Pro isn&apos;t active yet. We apply upgrades as soon as webhooks arrive.
         </span>
       </div>
     </div>
