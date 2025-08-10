@@ -147,7 +147,7 @@ const FormFieldContainer = ({
   const fieldEntities = formConfig?.fieldEntities;
 
   return (
-    <div className="flex flex-wrap w-full overflow-clip gap-5 transition-all duration-200 ease-in-out">
+    <div className="flex flex-wrap w-full overflow-clip gap-5 transition-all duration-200 ease-in-out relative z-10">
       {pageFields?.map(
         (field) =>
           fieldVisibilityMap?.[field] !== false && (

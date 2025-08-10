@@ -3,6 +3,7 @@ import { FormConfig } from '@/types/index';
 import React from 'react';
 import Form from '@/components/form/Form';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 
 const themeGradients = {
   'midnight-black': {
@@ -83,29 +84,31 @@ const FormPage = async ({ params }: FormPageProps) => {
       >
         {/* Accent glow effects */}
         <div
-          className={`absolute top-20 -right-40 w-96 h-96 ${gradientConfig.accentGlow1} rounded-full filter blur-[100px]`}
+          className={`absolute top-20 -right-40 w-96 h-96 ${gradientConfig.accentGlow1} rounded-full filter blur-[100px] pointer-events-none z-0`}
         ></div>
         <div
-          className={`absolute bottom-20 -left-40 w-96 h-96 ${gradientConfig.accentGlow2} rounded-full filter blur-[100px]`}
+          className={`absolute bottom-20 -left-40 w-96 h-96 ${gradientConfig.accentGlow2} rounded-full filter blur-[100px] pointer-events-none z-0`}
         ></div>
 
         {/* Additional glow for specific themes */}
         {(themeName === 'deep-violet' || themeName === 'night-sky') && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-900/5 to-blue-900/5 rounded-full filter blur-[120px]"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-900/5 to-blue-900/5 rounded-full filter blur-[120px] pointer-events-none z-0"></div>
         )}
 
         {/* Grid background */}
         <div
-          className="absolute z-[1] inset-0 bg-[url('/grid.svg')] bg-center"
+          className="absolute z-0 inset-0 bg-[url('/grid.svg')] bg-center pointer-events-none"
           style={{ opacity: gradientConfig.gridOpacity }}
         ></div>
 
         {/* Main form component */}
-        <Form formConfig={formConfig} />
+        <div className="relative z-10">
+          <Form formConfig={formConfig} />
+        </div>
 
         {/* Footer branding */}
-        <div className="mt-8 flex items-center justify-center opacity-30 hover:opacity-70 transition-opacity -ml-2">
-          <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-900 mr-2"></div>
+        <div className="mt-8 flex items-center justify-center opacity-30 hover:opacity-70 transition-opacity -ml-2 relative z-10">
+        <Image src="/logo.webp" alt="FormCraft" width={32} height={32} />
           <span className="text-sm font-medium text-zinc-200">Powered by FormCraft</span>
         </div>
       </main>

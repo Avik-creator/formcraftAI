@@ -26,7 +26,7 @@ export interface FormProps {
 type FormValueByPageMap = Record<string, Record<string, unknown>>;
 
 const classes = cn(
-  'flex relative z-[2] flex-col gap-9 border-yellow-200/10 px-3 py-5 md:px-7 md:py-5 mx-auto my-auto border border-dashed rounded-md w-[95%] md:w-[min(80%,890px)] transition-all duration-200',
+  'flex relative z-20 flex-col gap-9 border-yellow-200/10 px-3 py-5 md:px-7 md:py-5 mx-auto my-auto border border-dashed rounded-md w-[95%] md:w-[min(80%,890px)] transition-all duration-200',
 );
 
 const Form = ({ formConfig: config }: FormProps) => {
@@ -203,7 +203,7 @@ const Form = ({ formConfig: config }: FormProps) => {
   if (isSubmissionSuccess) {
     return (
       <section
-        className={'m-auto relative z-[2] text-center grid gap-1'}
+        className={'m-auto relative z-20 text-center grid gap-1'}
         style={{ backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000', fontFamily }}
       >
         <h3 className="font-bold text-white text-xl sm:text-3xl">Thank you!</h3>
@@ -223,8 +223,11 @@ const Form = ({ formConfig: config }: FormProps) => {
         backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000',
         boxShadow: '1px 1px 20px 4px #130d18',
         borderRadius: 20,
-        fontFamily
-      }}
+        fontFamily,
+        '--primary-text-color': formConfig?.theme?.properties?.primaryTextColor || '#ffffff',
+        '--secondary-text-color': formConfig?.theme?.properties?.secondaryTextColor || '#d1c6d1',
+        color: formConfig?.theme?.properties?.primaryTextColor || '#ffffff'
+      } as React.CSSProperties}
     >
       <FormHeader formConfig={formConfig} currentPageNumber={currentPageNumber} />
 

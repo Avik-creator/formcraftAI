@@ -38,14 +38,18 @@ const FormTextField = ({ field, className, formConfig, control }: FieldProps) =>
             <Input
               placeholder={field.placeholder}
               id={field.id}
-              className={cn('focus-visible:![border-color:rgba(255,255,255,0.5)]', {
+              className={cn('focus-visible:![border-color:rgba(255,255,255,0.5)] [color:var(--primary-text-color,#ffffff)!important]', {
                 'placeholder:text-[#7F7F7F]': theme === 'midnight-black',
                 'placeholder:text-[#A1A1A1]': theme === 'deep-space',
                 'placeholder:text-[#8C8C8C]': theme === 'charcoal-black',
                 'placeholder:text-[#A77BCA]': theme === 'deep-violet',
                 'placeholder:text-[#BDC3C7]': theme === 'night-sky',
               })}
-              style={{ color: primaryTextColor, borderColor: inputBorderColor }}
+              style={{ 
+                color: primaryTextColor || 'var(--primary-text-color, #ffffff)', 
+                borderColor: inputBorderColor,
+                '--tw-text-opacity': '1'
+              } as React.CSSProperties}
               {...rhFormField}
               value={rhFormField.value ?? field?.defaultValue ?? ''}
             />
