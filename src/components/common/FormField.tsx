@@ -19,20 +19,24 @@ const FormField = ({
   helperText,
   renderLabelExtraContent,
 }: FormFieldProps) => {
-  const classes = cn('flex flex-col gap-2 my-2', className);
+  const classes = cn('flex flex-col gap-2.5 p-3 bg-zinc-800/20 border border-zinc-700/40 rounded-lg hover:border-zinc-600/60 transition-colors', className);
   return (
     <Label className={classes} htmlFor={id}>
       <span
         className={cn(
-          'font-semibold text-[14px] sm:text-[15px] flex items-center tracking-tight text-zinc-200',
-          helperText ? '' : 'mb-1',
+          'font-semibold text-sm flex items-center tracking-tight text-zinc-100',
+          helperText ? '' : 'mb-0.5',
         )}
       >
         {label}
-        {required && <sup className="top-[-0.1em] ml-[1px] font-bold text-red-500 text-sm">*</sup>}
+        {required && <sup className="top-[-0.1em] ml-1 font-bold text-red-400 text-xs">*</sup>}
         {renderLabelExtraContent?.()}
       </span>
-      {helperText && <p className="-mt-0.5 text-xs text-zinc-400 font-medium mb-1">{helperText}</p>}
+      {helperText && (
+        <p className="text-xs text-zinc-400 font-medium -mt-1 mb-1 leading-relaxed">
+          {helperText}
+        </p>
+      )}
       {children}
     </Label>
   );

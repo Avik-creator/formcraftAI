@@ -112,13 +112,14 @@ export const createGenericSingleValueValidationComponent = ({
             onChange={handleChange}
             type={inputType ?? 'text'}
             min={inputType === 'number' ? 0 : undefined}
+            className="bg-zinc-800/50 border-zinc-600/50 text-white placeholder:text-zinc-400 focus:border-zinc-500/70 focus:ring-zinc-500/20"
           />
         )}
         {cb(fieldValidationValue) && (
           <Input
             defaultValue={fieldValidationMessage}
             name="message"
-            className="mt-2"
+            className="mt-2 bg-zinc-800/50 border-zinc-600/50 text-white placeholder:text-zinc-400 focus:border-zinc-500/70 focus:ring-zinc-500/20"
             placeholder={`Eg: ${label} validation message`}
             onChange={handleChange}
           />
@@ -195,6 +196,7 @@ export const createGenericBinaryValidationComponent = ({
         <Combobox
           options={requiredOptions}
           selectedValues={[required]}
+          className=''
           handleChange={(v) => {
             const validationFn = getValidationFn(message || '');
             updateSelectedField({
@@ -222,7 +224,7 @@ export const createGenericBinaryValidationComponent = ({
             name="message"
             defaultValue={message}
             onChange={handleChange}
-            className="mt-2"
+            className="mt-2 bg-zinc-800/50 border-zinc-600/50 text-white placeholder:text-zinc-400 focus:border-zinc-500/70 focus:ring-zinc-500/20"
             placeholder={`Eg: ${label} validation message`}
           />
         )}

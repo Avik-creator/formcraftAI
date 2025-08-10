@@ -112,33 +112,45 @@ const FieldValidationSection = () => {
   }, [selectedField]);
 
   const renderFields = () => {
-    if (fields.length > 7) {
+    if (fields.length > 6) {
       return (
-        <>
+        <div className="space-y-3">
           {fields.slice(0, 4).map((Field, idx) => (
             <Field key={idx} />
           ))}
-          {showMore && fields.slice(4).map((Field, idx) => <Field key={idx} />)}
-          <div className="flex justify-center">
-            <Button variant={'secondary'} onClick={() => setShowMore(!showMore)}>
-              {showMore ? 'Show less...' : 'Show more...'}
+          {showMore && (
+            <div className="space-y-3 animate-in slide-in-from-top-2 duration-200">
+              {fields.slice(4).map((Field, idx) => <Field key={idx} />)}
+            </div>
+          )}
+          <div className="flex justify-center pt-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowMore(!showMore)}
+              className="bg-zinc-700/50 border-zinc-600/50 hover:bg-zinc-600/50 hover:border-zinc-500/50 text-zinc-200 hover:text-white transition-all duration-200"
+            >
+              {showMore ? 'Show less' : `Show ${fields.length - 4} more`}
             </Button>
           </div>
-        </>
+        </div>
       );
     }
-    return fields.map((Field, idx) => <Field key={idx} />);
+    return (
+      <div className="space-y-3">
+        {fields.map((Field, idx) => <Field key={idx} />)}
+      </div>
+    );
   };
 
   if (!selectedField) return null;
 
   return (
     <FormConfigSection
-      subtitle="Setup validations for your fields quickly"
-      icon={<CheckCircle className="w-4 h-4 text-white/90" />}
-      title="Field validation"
+      subtitle="Configure validation rules to ensure data quality"
+      icon={<CheckCircle className="w-4 h-4 text-emerald-400" />}
+      title="Field Validation"
       key={selectedField?.id}
-      className="pb-40"
     >
       {renderFields()}
     </FormConfigSection>

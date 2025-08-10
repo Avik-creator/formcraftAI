@@ -5,12 +5,12 @@ import FieldConditionalLogicSection from './conditional-logic-section/Conditiona
 import FieldActionSection from './action-section/FieldActionSection';
 const FieldConfigMenu = () => {
   return (
-    <>
+    <div className="space-y-4 pb-8">
       <FieldActionSection />
       <FieldConfigSection />
       <FieldConditionalLogicSection />
       <FieldValidationSection />
-    </>
+    </div>
   );
 };
 

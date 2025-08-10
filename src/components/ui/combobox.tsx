@@ -78,16 +78,12 @@ export function Combobox({
   }, [selectedValues]);
 
   const label = (
-    <span className={cn('truncate', triggerClassName)}>
-      {values[0]?.label}{' '}
-      {allowMultiple ? (
-        values.length > 1 ? (
-          <span className="text-zinc-400 text-xs truncate ml-2">{` +${values.length - 1} more`}</span>
-        ) : (
-          ''
-        )
-      ) : (
-        ''
+    <span className={cn('truncate flex items-center', triggerClassName)}>
+      <span className="text-zinc-100 font-medium">{values[0]?.label}</span>
+      {allowMultiple && values.length > 1 && (
+        <span className="text-zinc-400 text-xs bg-zinc-700/50 px-2 py-0.5 rounded-full ml-2">
+          +{values.length - 1}
+        </span>
       )}
     </span>
   );
@@ -101,8 +97,9 @@ export function Combobox({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'justify-between overflow-hidden h-11 px-3 bg-zinc-900/60 border-zinc-700/60 hover:bg-zinc-900/70 text-zinc-100',
-            'focus-visible:ring-0 focus-visible:border-white/40',
+            'justify-between overflow-hidden h-10 px-3 bg-zinc-800/50 border-zinc-600/50 hover:bg-zinc-700/60 text-zinc-100',
+            'focus-visible:ring-2 focus-visible:ring-zinc-500/20 focus-visible:border-zinc-500/70 transition-all duration-200',
+            'shadow-sm hover:shadow-md',
             triggerClassName,
           )}
           style={triggerStyle}
@@ -110,31 +107,44 @@ export function Combobox({
           {values.length > 0 ? (
             label
           ) : (
-            <span className={cn('text-zinc-400', placeholderClassName)}>{placeholder ?? 'Select an option...'}</span>
+            <span className={cn('text-zinc-400 font-normal', placeholderClassName)}>{placeholder ?? 'Select an option...'}</span>
           )}
-          <CaretSortIcon className="ml-2 w-4 h-4 shrink-0 text-zinc-400" />
+          <CaretSortIcon className="ml-2 w-4 h-4 shrink-0 text-zinc-400 transition-transform duration-200" data-state={open ? 'open' : 'closed'} />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         style={{ width: popupWidth, ...dropdownStyle }}
-        className={cn('p-0 bg-zinc-900/95 border-zinc-700/70 shadow-lg backdrop-blur-sm max-h-80 overflow-auto', dropdownClassName)}
+        className={cn(
+          'p-0 bg-zinc-800/95 border-zinc-600/60 shadow-xl backdrop-blur-md max-h-80 overflow-auto text-white',
+          'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+          dropdownClassName
+        )}
       >
-        <Command className="bg-transparent text-zinc-100 [&_[cmdk-input-wrapper]]:border-zinc-800 [&_[cmdk-group-heading]]:text-zinc-400">
-          <CommandInput placeholder="Search..." className="h-9 text-zinc-100 placeholder:text-zinc-400" />
-          <CommandList>
-            <CommandEmpty className="p-2 text-zinc-400">Nothing found.</CommandEmpty>
-            <CommandGroup>
+        <Command className="bg-transparent text-zinc-100 [&_[cmdk-input-wrapper]]:border-zinc-700/50 [&_[cmdk-group-heading]]:text-zinc-400">
+          <CommandInput 
+            placeholder="Search..." 
+            className="h-10 text-zinc-100 placeholder:text-zinc-400 bg-zinc-800/30 border-0 focus:ring-0" 
+          />
+          <CommandList className="max-h-64">
+            <CommandEmpty className="p-4 text-center text-zinc-400 text-sm">
+              No options found.
+            </CommandEmpty>
+            <CommandGroup className="p-1">
               {_options?.map((option) => (
                 <CommandItem
                   key={option?.value as string}
                   value={option?.value as string}
                   onSelect={handleSelect}
-                  className="text-zinc-100 hover:bg-zinc-800/50 data-[selected=true]:bg-zinc-800/70"
+                  className={cn(
+                    'text-zinc-100 hover:bg-zinc-700/60 data-[selected=true]:bg-zinc-700/80',
+                    'cursor-pointer rounded-md px-3 py-2 text-sm transition-colors duration-150',
+                    'focus:bg-zinc-700/60 focus:outline-none focus:text-white'
+                  )}
                 >
-                  {option?.label}
+                  <span className="flex-1 text-white">{option?.label}</span>
                   <CheckIcon
                     className={cn(
-                      'ml-auto h-4 w-4',
+                      'ml-2 h-4 w-4 text-emerald-400 transition-opacity duration-150',
                       values?.find((v) => v?.value === option?.value) ? 'opacity-100' : 'opacity-0',
                     )}
                   />

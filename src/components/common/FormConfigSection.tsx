@@ -11,23 +11,33 @@ interface FormSectionProps extends GenericProps {
 }
 
 const FormConfigSection = ({ className, icon, subtitle, title, children }: FormSectionProps) => {
-  const classes = cn('flex flex-col gap-7 mb-2', className);
+  const classes = cn('flex flex-col gap-4 pt-2', className);
 
   return (
-    <Accordion type="single" collapsible defaultValue={title}>
-      <AccordionItem value={title}>
-        <AccordionTrigger>
-          <div className="flex flex-col">
-            <div className="flex items-start gap-2">
-              {icon}
-              <h3 className="-mt-2 font-bold text-sm tracking-tight md:text-lg bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400"> {title}</h3>
+    <div className="bg-zinc-800/30 border border-zinc-700/50 rounded-xl p-4 mb-4 shadow-lg backdrop-blur-sm">
+      <Accordion type="single" collapsible defaultValue={title}>
+        <AccordionItem value={title} className="border-none">
+          <AccordionTrigger className="hover:no-underline py-2 px-0">
+            <div className="flex flex-col items-start w-full">
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg border border-blue-500/30">
+                  {icon}
+                </div>
+                <h3 className="font-bold text-base tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-100 to-zinc-300">
+                  {title}
+                </h3>
+              </div>
+              {subtitle && (
+                <p className="text-xs font-medium text-zinc-400 mt-1 ml-10 text-left">
+                  {subtitle}
+                </p>
+              )}
             </div>
-            {subtitle && <small className="-mt-0.5 ml-6 text-xs font-[500] text-zinc-300">{subtitle}</small>}
-          </div>
-        </AccordionTrigger>
-        <AccordionContent className={classes}>{children}</AccordionContent>
-      </AccordionItem>
-    </Accordion>
+          </AccordionTrigger>
+          <AccordionContent className={classes}>{children}</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 };
 
