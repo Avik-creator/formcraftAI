@@ -30,7 +30,6 @@ const plans: Plan[] = [
       { text: "Up to 3 forms", included: true },
       { text: "100 submissions per month", included: true },
       { text: "Basic form templates", included: true },
-      { text: "Form analytics", included: true }
     ]
   },
   {
@@ -44,7 +43,6 @@ const plans: Plan[] = [
       { text: "Unlimited forms", included: true },
       { text: "Unlimited submissions", included: true },
       { text: "Google Sheets integration", included: true },
-      { text: "Advanced analytics", included: true }
     ]
   }
 ];

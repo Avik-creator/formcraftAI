@@ -54,7 +54,7 @@ const SortableFormFieldContainer = ({ pageId, isLastPage, activeField }: FormFie
               if (errorFields.length > 0) {
                 const firstError = errors[errorFields[0]];
                 toast.error('Form validation error', {
-                  description: firstError?.message || `Please check the ${errorFields[0]} field`,
+                  description: String(firstError?.message || `Please check the ${errorFields[0]} field`),
                   duration: 4000,
                 });
               }
