@@ -54,8 +54,8 @@ const FormCheckboxField = ({ field, className, formConfig, control, formValuesBy
         <FormItem className={cn('flex flex-col gap-4 space-y-0', className, 'hover:bg-transparent')}>
           <Label
             htmlFor={field?.id}
-            className="flex text-sm font-semibold md:text-[12px]"
-            style={{ color: primaryTextColor }}
+            className="flex text-sm font-semibold md:text-[12px] [color:var(--primary-text-color,#ffffff)!important]"
+            style={{ color: primaryTextColor || 'var(--primary-text-color, #ffffff)' }}
           >
             <span className="relative">
               {field.label}
@@ -82,7 +82,11 @@ const FormCheckboxField = ({ field, className, formConfig, control, formValuesBy
                     color={primaryTextColor}
                     className="h-6 w-6"
                   />
-                  <Label htmlFor={(option?.label + '-' + field.label) as string} style={{ color: primaryTextColor }}>
+                  <Label 
+                    htmlFor={(option?.label + '-' + field.label) as string} 
+                    className="[color:var(--primary-text-color,#ffffff)!important]"
+                    style={{ color: primaryTextColor || 'var(--primary-text-color, #ffffff)' }}
+                  >
                     {option?.label}
                   </Label>
                   <span className="sr-only">{option?.helperText}</span>

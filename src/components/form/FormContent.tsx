@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react';
 import { FieldValues, useForm, UseFormReturn, useWatch } from 'react-hook-form';
 import { LoaderCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 import useDebounceEffect from '@/hooks/useDebounceEffect';
 
@@ -104,7 +105,27 @@ const FormContent = ({
     <Form {...form}>
       <form
         className="mt-1 flex flex-col gap-3 w-full transition-all duration-200 ease-in-out"
-        onSubmit={form.handleSubmit(handleFormSubmit, (errors) => console.log(JSON.stringify(errors, null, 2)))}
+        onSubmit={form.handleSubmit(handleFormSubmit, (errors) => {
+          console.log(JSON.stringify(errors, null, 2));
+          const errorFields = Object.keys(errors);
+          if (errorFields.length > 0) {
+            const firstError = errors[errorFields[0]];
+            let errorMessage = `Please check the ${errorFields[0]} field`;
+
+            if (typeof firstError === 'string') {
+              errorMessage = firstError;
+            } else if (firstError && typeof firstError === 'object' && 'message' in firstError) {
+              errorMessage = typeof firstError.message === 'string'
+                ? firstError.message
+                : `Please check the ${errorFields[0]} field`;
+            }
+
+            toast.error('Form validation failed', {
+              description: errorMessage,
+              duration: 4000,
+            });
+          }
+        })}
       >
         <FormPageName name={activePage?.name} color={formConfig?.theme?.properties?.primaryTextColor || '#ffffff'} />
         <FormFieldContainer

@@ -129,7 +129,7 @@ export function Combobox({
                   key={option?.value as string}
                   value={option?.value as string}
                   onSelect={handleSelect}
-                  className="text-zinc-100 data-[selected=true]:bg-zinc-800/70"
+                  className="text-zinc-100 hover:bg-zinc-800/50 data-[selected=true]:bg-zinc-800/70"
                 >
                   {option?.label}
                   <CheckIcon

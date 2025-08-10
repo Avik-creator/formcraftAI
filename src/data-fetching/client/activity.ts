@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { createNewActivity } from '@/data-fetching/functions/activity';
 
@@ -19,7 +20,13 @@ export const useCreateActivityMutation = ({
     onSuccess: (data, _, context) => {
       onSuccess?.(data as ActivityModelType, context as string);
     },
-    onError,
+    onError: (error, vars, context) => {
+      toast.error('Failed to log activity', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        duration: 3000,
+      });
+      onError?.(error);
+    },
   });
 
   return {

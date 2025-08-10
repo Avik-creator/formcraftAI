@@ -46,10 +46,30 @@ const Form = ({ formConfig: config }: FormProps) => {
 
   const { mutateAsync: createFormSubmission, isPending: isSubmitting } = useCreateFormSubmissionMutation({
     onError: (error) => {
-      toast.error('Error', {
-        description: (error as Error).message,
-        duration: 3000,
-      });
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      
+      // Handle specific error cases
+      if (errorMessage.includes('already submitted')) {
+        toast.error('Form Already Submitted', {
+          description: 'You have already submitted this form',
+          duration: 4000,
+        });
+      } else if (errorMessage.includes('not published')) {
+        toast.error('Form Not Available', {
+          description: 'This form is not currently accepting submissions',
+          duration: 4000,
+        });
+      } else if (errorMessage.includes('Form not found')) {
+        toast.error('Form Not Found', {
+          description: 'The form you are trying to submit does not exist',
+          duration: 4000,
+        });
+      } else {
+        toast.error('Submission Failed', {
+          description: errorMessage,
+          duration: 4000,
+        });
+      }
     },
   });
 
@@ -231,18 +251,18 @@ const Form = ({ formConfig: config }: FormProps) => {
     >
       <FormHeader formConfig={formConfig} currentPageNumber={currentPageNumber} />
 
-        <FormContent
-          key={activePageId} // should destroy and re-render when activePageId changes
-          formConfig={formConfig}
-          formValuesByPageMap={formValuesByPage}
-          fieldVisibilityMap={fieldVisibilityMap}
-          activePageId={activePageId}
-          onActivePageIdChange={handleActivePageIdChange}
-          onFormSubmit={handleFormSubmit}
-          onPageFieldChange={setFieldEntities}
-          onFormValueChange={setFormValuesByPage}
-          isFormSubmitting={isSubmitting}
-        />
+      <FormContent
+        key={activePageId} // should destroy and re-render when activePageId changes
+        formConfig={formConfig}
+        formValuesByPageMap={formValuesByPage}
+        fieldVisibilityMap={fieldVisibilityMap}
+        activePageId={activePageId}
+        onActivePageIdChange={handleActivePageIdChange}
+        onFormSubmit={handleFormSubmit}
+        onPageFieldChange={setFieldEntities}
+        onFormValueChange={setFormValuesByPage}
+        isFormSubmitting={isSubmitting}
+      />
 
       {/* <FormFooter /> */}
     </section>

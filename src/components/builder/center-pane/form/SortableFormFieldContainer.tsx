@@ -1,5 +1,6 @@
 import { Fragment, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import FieldRenderer from './FieldRenderer';
 import { Form } from '@/components/ui/form';
@@ -47,7 +48,17 @@ const SortableFormFieldContainer = ({ pageId, isLastPage, activeField }: FormFie
           className="w-full transition-all duration-200 ease-in-out"
           onSubmit={form.handleSubmit(
             (data) => console.log(data),
-            (errors) => console.log(JSON.stringify(errors, null, 2)),
+            (errors) => {
+              console.log(JSON.stringify(errors, null, 2));
+              const errorFields = Object.keys(errors);
+              if (errorFields.length > 0) {
+                const firstError = errors[errorFields[0]];
+                toast.error('Form validation error', {
+                  description: firstError?.message || `Please check the ${errorFields[0]} field`,
+                  duration: 4000,
+                });
+              }
+            },
           )}
           style={{fontFamily, letterSpacing:'normal !important'}}
         >

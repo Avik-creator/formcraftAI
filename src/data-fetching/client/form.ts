@@ -35,7 +35,13 @@ export const useCreateFormMutation = ({
       onSuccess(data, context);
       queryClient.invalidateQueries({ queryKey: ['all-forms', userId] });
     },
-    onError,
+    onError: (error, vars, context) => {
+      toast.error('Failed to create form', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        duration: 4000,
+      });
+      onError?.(error);
+    },
   });
 
   return mutate;
@@ -54,6 +60,7 @@ export const useDeleteFormMutation = ({
   const { mutate } = useMutation({
     mutationFn: ({ id }: { id: string }) => deleteForm(id),
     onMutate: ({ id }) => {
+      const previousData = queryClient.getQueryData(['all-forms', userId]);
       onMutate?.();
       queryClient.setQueryData(['all-forms', userId], (prev: FormConfig[]) => {
         if (prev) {
@@ -61,9 +68,19 @@ export const useDeleteFormMutation = ({
         }
         return prev;
       });
+      return { previousData };
     },
     onSuccess: (data, vars, context) => {
       onSuccess?.(data, void vars, context);
+    },
+    onError: (error, vars, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['all-forms', userId], context.previousData);
+      }
+      toast.error('Failed to delete form', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        duration: 4000,
+      });
     },
   });
 
@@ -88,6 +105,7 @@ export const useUpdateFormConfigMutation = () => {
     },
 
     onMutate: ({ id, update }) => {
+      const previousData = queryClient.getQueryData(['all-forms', userId]);
       queryClient.setQueryData(['all-forms', userId], (prev: FormConfigWithMeta[]) => {
         if (prev) {
           return prev.map((form) => {
@@ -108,6 +126,16 @@ export const useUpdateFormConfigMutation = () => {
           });
         }
         return prev;
+      });
+      return { previousData };
+    },
+    onError: (error, vars, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['all-forms', userId], context.previousData);
+      }
+      toast.error('Failed to update form', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        duration: 4000,
       });
     },
   });
@@ -214,8 +242,21 @@ export const usePublishFormMutation = () => {
         return prev;
       });
     },
+    onError: (error, vars, context) => {
+      queryClient.setQueryData(['all-forms', userId], context);
+      toast.error('Failed to publish form', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        duration: 4000,
+      });
+    },
+    onSuccess: () => {
+      toast.success('Form published successfully!', {
+        description: 'Your form is now live and ready to receive submissions',
+        duration: 3000,
+      });
+    },
     onSettled: (data, error, vars, context) => {
-      if (error) {
+      if (error && context) {
         queryClient.setQueryData(['all-forms', userId], context);
       }
     },

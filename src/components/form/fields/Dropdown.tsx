@@ -61,8 +61,8 @@ const FormDropdownField = ({ field, className, formConfig, control, formValuesBy
         <FormItem className={cn('flex flex-col gap-4 space-y-0', className, 'hover:bg-transparent')}>
           <Label 
             htmlFor={field?.id} 
-            className="flex text-sm font-semibold md:text-[12px]"
-            style={{ color: primaryTextColor }}
+            className="flex text-sm font-semibold md:text-[12px] [color:var(--primary-text-color,#ffffff)!important]"
+            style={{ color: primaryTextColor || 'var(--primary-text-color, #ffffff)' }}
           >
             <span className="relative">
               {field.label}
@@ -83,7 +83,10 @@ const FormDropdownField = ({ field, className, formConfig, control, formValuesBy
                 rhFormField?.onChange(values?.map((d) => d.value));
                 handleChange(values);
               }}
-              triggerStyle={{ color: primaryTextColor, borderColor: inputBorderColor }}
+              triggerStyle={{ 
+                color: primaryTextColor || 'var(--primary-text-color, #ffffff)', 
+                borderColor: inputBorderColor 
+              }}
               placeholderClassName={cn('focus-visible:![border-color:rgba(255,255,255,0.5)]', {
                 'text-[#7F7F7F]': theme === 'midnight-black',
                 'text-[#A1A1A1]': theme === 'deep-space',

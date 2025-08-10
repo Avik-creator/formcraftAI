@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs';
 import { CLERK_APPEARANCE_CONFIG } from "@/utils/clerk";
 import ReactQueryProvider from "@/providers/react-query";
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           {children}
+          <Toaster richColors/>
         </ReactQueryProvider>
       </body>
     </html>
