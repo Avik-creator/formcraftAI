@@ -71,7 +71,7 @@ const LandingPage = () => {
             >
                 <div className="flex items-center gap-2">
                    <Image src="/logo.webp" alt="FormCraft" width={32} height={32} />
-                    <span className="font-bold text-xl">FormCraft</span>
+                    <span className="font-bold text-xl text-white">FormCraft</span>
                 </div>
                 <nav className="hidden md:flex items-center gap-8">
                     <a

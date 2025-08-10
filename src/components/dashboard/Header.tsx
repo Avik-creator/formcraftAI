@@ -29,7 +29,7 @@ const Header = () => {
     <div className="flex justify-between gap-6 items-center mb-4 sticky bg-[#0f0d10] -top-3 py-3 z-20 w-full">
       <div className="flex items-center gap-2">
         <Image src={'/logo.webp'} alt="FormCraft" width={32} height={32} />
-        <Link className="font-bold text-lg md:text-xl" href={'/'}>
+        <Link className="font-bold text-lg md:text-xl text-white" href={'/'}>
           FormCraft
         </Link>
       </div>
