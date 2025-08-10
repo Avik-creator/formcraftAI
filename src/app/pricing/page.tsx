@@ -145,9 +145,11 @@ export default function PricingSection() {
             <div className="space-y-4">
               {plan.name === "Pro" ? (
                 isPro ? (
-                  <Button className="w-full h-12 bg-gradient-to-r from-zinc-700 to-zinc-800 hover:from-zinc-600 hover:to-zinc-700 border-zinc-600/50 text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl">
-                    Go to Dashboard
-                  </Button>
+                  <Link href="/dashboard">
+                    <Button className="w-full h-12 bg-gradient-to-r from-zinc-700 to-zinc-800 hover:from-zinc-600 hover:to-zinc-700 border-zinc-600/50 text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl">
+                      Go to Dashboard
+                    </Button>
+                  </Link>
                 ) : (
                   <Link href={user ? getProCheckoutHref() : `/sign-in?redirect_url=${encodeURIComponent(getProCheckoutHref())}` }>
                     <Button 
