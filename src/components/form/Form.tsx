@@ -175,6 +175,20 @@ const Form = ({ formConfig: config }: FormProps) => {
             [validatorKey]: () => true,
           };
         }
+
+        // For non-required validators, only validate if field has a value and field is not explicitly optional
+        if (validatorKey !== 'required') {
+          const isFieldRequired = field?.validation?.custom?.required?.value !== 'false' && field?.validation?.custom?.required?.value !== false;
+          if (!isFieldRequired) {
+            const validationFunctor = validationMap?.[validatorKey as keyof typeof validationMap] as (
+              ...args: unknown[]
+            ) => (value: string) => boolean;
+            const actualValidator = validationFunctor?.(...args);
+            return {
+              [validatorKey]: (value: string) => !value || value.trim() === '' ? true : actualValidator?.(value) || true,
+            };
+          }
+        }
       }
 
       const validationFunctor = validationMap?.[validatorKey as keyof typeof validationMap] as (

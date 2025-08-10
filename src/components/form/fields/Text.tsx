@@ -27,7 +27,7 @@ const FormTextField = ({ field, className, formConfig, control }: FieldProps) =>
           >
             <span className="relative">
               {field.label}
-              {field?.validation?.custom?.required?.value && (
+              {field?.validation?.custom?.required?.value && field?.validation?.custom?.required?.value !== 'false' && field?.validation?.custom?.required?.value !== false && (
                 <sup className="absolute top-[-0.2em] right-[-8px] ml-[1px] font-bold text-red-500 text-sm inline">
                   *
                 </sup>

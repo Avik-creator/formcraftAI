@@ -93,7 +93,7 @@ const FormFieldLabelAndControls = ({
       <div className="flex items-center gap-3 flex-1">
         <div className="w-2 h-2 bg-zinc-500 rounded-full flex-shrink-0" />
         <span className="text-sm font-medium text-white">{field.label}</span>
-        {field.validation?.required?.value && (
+        {field.validation?.custom?.required?.value && field.validation?.custom?.required?.value !== 'false' && field.validation?.custom?.required?.value !== false && (
           <span className="text-red-400 text-xs font-medium">*</span>
         )}
       </div>
