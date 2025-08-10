@@ -13,7 +13,7 @@ export const GET = CustomerPortal({
     const profile = await UserBillingProfile.findOne({ userId }).lean();
     return profile?.polarCustomerId ?? '';
   },
-  server: 'sandbox',
+  server: 'production',
 });
 
 
