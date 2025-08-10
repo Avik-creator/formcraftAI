@@ -44,12 +44,15 @@ const FormRadioField = ({ field, className, formConfig, control }: FieldProps) =
                   <RadioGroupItem
                     value={option?.value as string}
                     id={(option?.label + '-' + field.label) as string}
-                    style={{ borderColor: inputBorderColor }}
-                    className="w-6 h-6"
+                    style={{
+                      borderColor: inputBorderColor || '#d1d5db',
+                      '--tw-ring-color': inputBorderColor || '#3b82f6'
+                    } as React.CSSProperties}
+                    className="w-5 h-5 border-2 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus:ring-2 focus:ring-offset-2"
                   />
-                  <Label 
-                    htmlFor={(option?.label + '-' + field.label) as string} 
-                    className="[color:var(--primary-text-color,#ffffff)!important]"
+                  <Label
+                    htmlFor={(option?.label + '-' + field.label) as string}
+                    className="text-sm font-medium cursor-pointer [color:var(--primary-text-color,#ffffff)!important]"
                     style={{ color: primaryTextColor || 'var(--primary-text-color, #ffffff)' }}
                   >
                     {option?.label}

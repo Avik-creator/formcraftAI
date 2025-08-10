@@ -80,7 +80,7 @@ const FormCheckboxField = ({ field, className, formConfig, control, formValuesBy
                     id={(option?.label + '-' + field.label) as string}
                     style={{ borderColor: inputBorderColor }}
                     color={primaryTextColor}
-                    className="h-6 w-6"
+                    className="h-6 w-6 text-white"
                   />
                   <Label 
                     htmlFor={(option?.label + '-' + field.label) as string} 
