@@ -21,7 +21,7 @@ import { HeroVideoDialog } from '@/components/ui/VideoDialog';
 
 const LINKS = {
     githubProfile: 'https://github.com/Avik-creator',
-    projectRepo: 'https://github.com/Avik-creator/form-craft',
+    projectRepo: 'https://github.com/Avik-creator/formcraftAI',
     signin: '/sign-in',
     templates: '/templates',
     dashboard: '/dashboard',
