@@ -121,9 +121,9 @@ export function Combobox({
         )}
       >
         <Command className="bg-transparent text-zinc-100 [&_[cmdk-input-wrapper]]:border-zinc-700/50 [&_[cmdk-group-heading]]:text-zinc-400">
-          <CommandInput 
-            placeholder="Search..." 
-            className="h-10 text-zinc-100 placeholder:text-zinc-400 bg-zinc-800/30 border-0 focus:ring-0" 
+          <CommandInput
+            placeholder="Search..."
+            className="h-10 text-zinc-100 placeholder:text-zinc-400 bg-zinc-800/30 border-0 focus:ring-0"
           />
           <CommandList className="max-h-64">
             <CommandEmpty className="p-4 text-center text-zinc-400 text-sm">

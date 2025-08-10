@@ -28,9 +28,9 @@ const FormConfigSection = ({ className, icon, subtitle, title, children }: FormS
                 </h3>
               </div>
               {subtitle && (
-                <p className="text-xs font-medium text-zinc-400 mt-1 ml-10 text-left">
+                <span className="text-xs font-medium text-zinc-400 mt-1 ml-10 text-left block">
                   {subtitle}
-                </p>
+                </span>
               )}
             </div>
           </AccordionTrigger>

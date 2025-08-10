@@ -23,17 +23,17 @@ const RightPane = ({ className }: GenericProps) => {
   return (
     <div className={classes}>
       <Tabs value={selected} className="w-full h-full flex flex-col">
-        <TabsList className="w-full sticky top-0 z-10 bg-zinc-800/80 backdrop-blur-md border border-zinc-700/50 rounded-xl p-1.5 shadow-lg mb-4">
+        <TabsList className="w-full sticky top-0 z-10 bg-zinc-800 border border-zinc-700/50 rounded-xl p-1.5 shadow-lg mb-4">
           <TabsTrigger
             value="fields"
-            className="basis-1/2 px-4 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600/20 data-[state=active]:to-purple-600/20 data-[state=active]:border data-[state=active]:border-blue-500/30 data-[state=active]:shadow-md"
+            className="basis-1/2 px-4 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-zinc-700 data-[state=active]:shadow-md"
             onClick={() => setSelected('fields')}
           >
             Fields
           </TabsTrigger>
           <TabsTrigger
             value="settings"
-            className="basis-1/2 px-4 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600/20 data-[state=active]:to-purple-600/20 data-[state=active]:border data-[state=active]:border-blue-500/30 data-[state=active]:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
+            className="basis-1/2 px-4 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:ring-0 data-[state=active]:text-white data-[state=active]:bg-zinc-700 data-[state=active]:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!selectedField}
             onClick={() => setSelected('settings')}
           >
