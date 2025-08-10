@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, XCircle, Info, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type Feature = {
   text: string;
@@ -109,10 +110,13 @@ export default function PricingSection() {
               </ul>
 
             </div>
-
+            <Link href={"/sign-up"}>
             <Button variant="ghost" className="text-zinc-400 hover:text-zinc-300 mt-8 w-full border border-zinc-700 hover:bg-zinc-800">
+             
               Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              
             </Button>
+            </Link>
           </div>
         ))}
       </div>
