@@ -145,11 +145,9 @@ export default function PricingSection() {
             <div className="space-y-4">
               {plan.name === "Pro" ? (
                 isPro ? (
-                  <Link href="/portal">
-                    <Button className="w-full h-12 bg-gradient-to-r from-zinc-700 to-zinc-800 hover:from-zinc-600 hover:to-zinc-700 border-zinc-600/50 text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl">
-                      Manage in Portal <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
+                  <Button className="w-full h-12 bg-gradient-to-r from-zinc-700 to-zinc-800 hover:from-zinc-600 hover:to-zinc-700 border-zinc-600/50 text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Go to Dashboard
+                  </Button>
                 ) : (
                   <Link href={user ? getProCheckoutHref() : `/sign-in?redirect_url=${encodeURIComponent(getProCheckoutHref())}` }>
                     <Button 
@@ -187,11 +185,9 @@ export default function PricingSection() {
           <p className="text-zinc-400 text-sm mb-6">
             Need help choosing? Our support team is here to assist you.
           </p>
-          <Link href="/portal">
-            <Button variant="ghost" className="bg-zinc-800/40 hover:bg-zinc-700/60 border border-zinc-700/50 text-zinc-300 hover:text-white px-8 py-3 rounded-lg transition-all duration-300">
-              Open Customer Portal
-            </Button>
-          </Link>
+          <Button variant="ghost" className="bg-zinc-800/40 hover:bg-zinc-700/60 border border-zinc-700/50 text-zinc-300 hover:text-white px-8 py-3 rounded-lg transition-all duration-300" onClick={() => window.location.href = 'mailto:avikm744@gmail.com'}>
+            Contact Support
+          </Button>
         </div>
       </div>
     </div>

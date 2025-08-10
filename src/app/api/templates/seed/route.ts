@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { createNewTemplateAction, deleteAllTemplatesAction } from '@/backend/actions/template';
+import { auth } from '@clerk/nextjs/server';
 import { createNewForm } from '@/lib/form';
 import { templates as templateSeeds } from '@/utils/data';
 
@@ -8,6 +9,10 @@ export const revalidate = 0;
 
 export async function GET() {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
     // Start fresh each time for idempotency during development
     await deleteAllTemplatesAction();
 

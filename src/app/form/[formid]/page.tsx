@@ -61,7 +61,7 @@ const FormPage = async ({ params }: FormPageProps) => {
       notFound();
     }
 
-    console.log('Processing formId:', formid);
+    // do not log request parameters
     
     // Fetch form configuration with error handling
     const response = await getFormConfigWithIdAction(formid);
@@ -72,7 +72,7 @@ const FormPage = async ({ params }: FormPageProps) => {
     }
 
     const formConfig: FormConfig = response.data;
-    console.log('Form config loaded:', formConfig);
+    // do not log form configuration
 
     // Get theme configuration
     const themeName = formConfig?.theme?.id || 'midnight-black';

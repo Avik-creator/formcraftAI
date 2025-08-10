@@ -16,10 +16,10 @@ export const useUserPlanQuery = () =>
     staleTime: 60 * 1000,
   });
 
-export const useUserUsageQuery = (targetUserId?: string) =>
+export const useUserUsageQuery = () =>
   useQuery({
-    queryKey: ['billing', 'usage', targetUserId ?? 'self'],
-    queryFn: () => fetchUserUsage(targetUserId),
+    queryKey: ['billing', 'usage', 'self'],
+    queryFn: () => fetchUserUsage(),
     staleTime: 30 * 1000,
   });
 

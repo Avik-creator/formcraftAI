@@ -1,4 +1,4 @@
-import { Webhooks } from '@polar-sh/nextjs';
+import { Webhooks, type PolarCustomer, type PolarOrder, type PolarSubscription } from '@polar-sh/nextjs';
 import connectDb from '@/backend/db/connection';
 import UserBillingProfile from '@/backend/models/userBillingProfile';
 
@@ -7,7 +7,7 @@ export const POST = Webhooks({
   onPayload: async () => {},
   onCustomerCreated: async (event) => {
     await connectDb();
-    const customer = event.data as any;
+    const customer = event.data as PolarCustomer;
     const appUserId =
       (customer?.metadata as Record<string, string> | undefined)?.appUserId ||
       (customer?.externalId as string | undefined);
@@ -20,7 +20,7 @@ export const POST = Webhooks({
   },
   onSubscriptionActive: async (event) => {
     await connectDb();
-    const sub = event.data as any;
+    const sub = event.data as PolarSubscription;
     const appUserId =
       (sub?.customer?.metadata as Record<string, string> | undefined)?.appUserId ||
       (sub?.customer?.externalId as string | undefined);
@@ -33,7 +33,7 @@ export const POST = Webhooks({
   },
   onSubscriptionCanceled: async (event) => {
     await connectDb();
-    const sub = event.data as any;
+    const sub = event.data as PolarSubscription;
     const appUserId =
       (sub?.customer?.metadata as Record<string, string> | undefined)?.appUserId ||
       (sub?.customer?.externalId as string | undefined);
@@ -46,7 +46,7 @@ export const POST = Webhooks({
   },
   onOrderPaid: async (event) => {
     await connectDb();
-    const order = event.data as any;
+    const order = event.data as PolarOrder;
     const customer = order?.customer;
     const appUserId =
       (order?.metadata as Record<string, string> | undefined)?.appUserId ||
@@ -64,7 +64,7 @@ export const POST = Webhooks({
   },
   onOrderRefunded: async (event) => {
     await connectDb();
-    const order = event.data as any;
+    const order = event.data as PolarOrder;
     const customer = order?.customer;
     const appUserId =
       (order?.metadata as Record<string, string> | undefined)?.appUserId ||

@@ -42,14 +42,11 @@ export default function SuccessPage() {
             Go to Dashboard
           </Button>
 
-          <Link href="/portal">
-            <Button className="w-full bg-zinc-800/60 hover:bg-zinc-700/60 border border-zinc-700/60">
-              Open Customer Portal <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+        
+
 
           <Link href="/">
-            <Button variant="ghost" className="w-full border border-zinc-700/60 hover:bg-zinc-800/50">
+            <Button variant="ghost" className="w-full border border-zinc-700/60 hover:bg-zinc-800/50 bg-zinc-800/60 hover:bg-zinc-700/60">
               Back to Home
             </Button>
           </Link>

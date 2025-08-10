@@ -65,9 +65,9 @@ export const getUserPlanAction = async () => {
   }
 };
 
-export const getUserUsageAction = async (targetUserId?: string) => {
+export const getUserUsageAction = async () => {
   try {
-    const userId = targetUserId ?? (await verifyAuth());
+    const userId = await verifyAuth();
     await connectDb();
 
     const formsCount = await Form.countDocuments({ createdBy: userId });
@@ -103,7 +103,7 @@ export const getBillingInfoAction = async () => {
     const planId: BillingPlanId = isPro ? 'proplan' : 'free';
     const limits = getPlanLimits(isPro);
 
-    const usageRes = await getUserUsageAction(userId);
+    const usageRes = await getUserUsageAction();
     if (!usageRes.success) throw new Error(String(usageRes.error ?? 'Failed to fetch usage'));
 
     const info: BillingInfo = {

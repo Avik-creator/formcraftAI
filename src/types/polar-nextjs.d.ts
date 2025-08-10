@@ -4,6 +4,24 @@ declare module '@polar-sh/nextjs' {
 
   type EnvString = string | undefined;
 
+  // Minimal Polar type models used by our app
+  export type PolarMetadata = Record<string, string>;
+
+  export interface PolarCustomer {
+    id: string;
+    metadata?: PolarMetadata;
+    externalId?: string;
+  }
+
+  export interface PolarSubscription {
+    customer?: PolarCustomer;
+  }
+
+  export interface PolarOrder {
+    customer?: PolarCustomer;
+    metadata?: PolarMetadata;
+  }
+
   export function Checkout(config: {
     accessToken: EnvString;
     successUrl?: EnvString;
@@ -17,24 +35,24 @@ declare module '@polar-sh/nextjs' {
     server?: 'sandbox' | 'production';
   }): (req: NextRequest) => Promise<NextResponse> | NextResponse;
 
-  type WebhookEvent<T = any> = { type: string; data: T };
+  type WebhookEvent<T = unknown> = { type: string; data: T };
 
   export function Webhooks(config: {
     webhookSecret: string;
     onPayload?: (payload: WebhookEvent) => Promise<void> | void;
     onCheckoutCreated?: (event: WebhookEvent) => Promise<void> | void;
     onCheckoutUpdated?: (event: WebhookEvent) => Promise<void> | void;
-    onOrderCreated?: (event: WebhookEvent) => Promise<void> | void;
-    onOrderPaid?: (event: WebhookEvent) => Promise<void> | void;
-    onOrderRefunded?: (event: WebhookEvent) => Promise<void> | void;
+    onOrderCreated?: (event: WebhookEvent<PolarOrder>) => Promise<void> | void;
+    onOrderPaid?: (event: WebhookEvent<PolarOrder>) => Promise<void> | void;
+    onOrderRefunded?: (event: WebhookEvent<PolarOrder>) => Promise<void> | void;
     onRefundCreated?: (event: WebhookEvent) => Promise<void> | void;
     onRefundUpdated?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionCreated?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionUpdated?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionActive?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionCanceled?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionRevoked?: (event: WebhookEvent) => Promise<void> | void;
-    onSubscriptionUncanceled?: (event: WebhookEvent) => Promise<void> | void;
+    onSubscriptionCreated?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
+    onSubscriptionUpdated?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
+    onSubscriptionActive?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
+    onSubscriptionCanceled?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
+    onSubscriptionRevoked?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
+    onSubscriptionUncanceled?: (event: WebhookEvent<PolarSubscription>) => Promise<void> | void;
     onProductCreated?: (event: WebhookEvent) => Promise<void> | void;
     onProductUpdated?: (event: WebhookEvent) => Promise<void> | void;
     onOrganizationUpdated?: (event: WebhookEvent) => Promise<void> | void;
@@ -43,10 +61,10 @@ declare module '@polar-sh/nextjs' {
     onBenefitGrantCreated?: (event: WebhookEvent) => Promise<void> | void;
     onBenefitGrantUpdated?: (event: WebhookEvent) => Promise<void> | void;
     onBenefitGrantRevoked?: (event: WebhookEvent) => Promise<void> | void;
-    onCustomerCreated?: (event: WebhookEvent) => Promise<void> | void;
-    onCustomerUpdated?: (event: WebhookEvent) => Promise<void> | void;
-    onCustomerDeleted?: (event: WebhookEvent) => Promise<void> | void;
-    onCustomerStateChanged?: (event: WebhookEvent) => Promise<void> | void;
+    onCustomerCreated?: (event: WebhookEvent<PolarCustomer>) => Promise<void> | void;
+    onCustomerUpdated?: (event: WebhookEvent<PolarCustomer>) => Promise<void> | void;
+    onCustomerDeleted?: (event: WebhookEvent<PolarCustomer>) => Promise<void> | void;
+    onCustomerStateChanged?: (event: WebhookEvent<PolarCustomer>) => Promise<void> | void;
   }): (req: NextRequest) => Promise<NextResponse> | NextResponse;
 }
 

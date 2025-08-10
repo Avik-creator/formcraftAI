@@ -119,14 +119,14 @@ const LandingPage = () => {
                             variants={childVariants}
                             className="text-3xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-500"
                         >
-                            Build Beautiful Forms Without Code
+                            Build Forms Without Code
                         </motion.h1>
                         <motion.p
                             variants={childVariants}
                             className="text-base md:text-xl text-gray-300 mb-8"
                         >
                             FormCraft is an AI powered no code drag-and-drop
-                            form builder that helps you create stunning,
+                            form builder that helps you create good and
                             responsive forms with advanced features in minutes,
                             not hours.
                         </motion.p>

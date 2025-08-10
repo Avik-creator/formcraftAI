@@ -9,7 +9,6 @@ async function connectDb() {
   try {
     // Check if already connected
     if (clientReadyState === mongoose.ConnectionStates.connected) {
-      console.log('Already connected to MongoDB database');
       return;
     }
 
@@ -24,15 +23,15 @@ async function connectDb() {
     clientReadyState = dbClient.connection.readyState;
 
     if (clientReadyState === mongoose.ConnectionStates.connected) {
-      console.log('Connected to MongoDB database');
+      // Connected
     }
 
     // Log errors
     dbClient.connection.on('error', (error) => {
-      console.error('Error connecting to MongoDB database:', error);
+      console.error('MongoDB error:', error);
     });
   } catch (error) {
-    console.error('Error connecting to MongoDB database:', error);
+    console.error('MongoDB connect error:', error);
     throw error; // Rethrow the error after logging it
   }
 }
@@ -42,7 +41,7 @@ export async function disconnectDb() {
   if (clientReadyState === mongoose.ConnectionStates.connected) {
     await mongoose.disconnect();
     clientReadyState = null;
-    console.log('Disconnected from MongoDB database');
+    // Disconnected
   }
 }
 

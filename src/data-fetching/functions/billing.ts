@@ -36,8 +36,8 @@ export const fetchUserPlan = async () => {
   }
 };
 
-export const fetchUserUsage = async (targetUserId?: string) => {
-  const res = await getUserUsageAction(targetUserId);
+export const fetchUserUsage = async () => {
+  const res = await getUserUsageAction();
 
   if (res?.success) return res?.data as BillingUsage;
 
