@@ -149,19 +149,19 @@ const SectionDisplay = () => {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onDragOver={handleDragOver}
-        // onDragMove={handleDragMove}
+      // onDragMove={handleDragMove}
       >
         {isLargeScreen && (
           <ResizablePanelGroup direction="horizontal" className="h-full">
-            <ResizablePanel defaultSize={22} minSize={18} maxSize={26}>
+            <ResizablePanel defaultSize={24} minSize={15} maxSize={30}>
               {leftpane}
             </ResizablePanel>
             <ResizableHandle withHandle className="bg-zinc-800/50 hover:bg-zinc-700/50 transition-colors" />
-            <ResizablePanel minSize={45} maxSize={75}>
+            <ResizablePanel defaultSize={55} minSize={40} maxSize={70}>
               {centerpane}
             </ResizablePanel>
             <ResizableHandle withHandle className="bg-zinc-800/50 hover:bg-zinc-700/50 transition-colors" />
-            <ResizablePanel defaultSize={22} minSize={18} maxSize={26}>
+            <ResizablePanel defaultSize={25} minSize={20} maxSize={35}>
               {rightpane}
             </ResizablePanel>
           </ResizablePanelGroup>
