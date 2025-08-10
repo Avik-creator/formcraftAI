@@ -15,7 +15,7 @@ const usePopulateFieldValidation = (pageId: string) => {
       fieldType: FieldType,
       validationType: CustomValidationType,
       validatorKey: string,
-      valueToCheck?: string,
+      valueToCheck?: string | boolean,
     ) => {
       const field = fieldEntities?.[fieldId];
       const fieldValidations =
@@ -34,7 +34,8 @@ const usePopulateFieldValidation = (pageId: string) => {
       if (validationType === 'binary') {
         args = [customValidation?.message];
 
-        if (valueToCheck === 'false' || !valueToCheck) {
+        // If the validation value is explicitly false (not required), return a function that always passes
+        if (valueToCheck === 'false' || valueToCheck === false) {
           return {
             [validatorKey]: () => true,
           };
