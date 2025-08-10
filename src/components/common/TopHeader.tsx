@@ -144,22 +144,29 @@ const PublishedFormModal = ({ open, setOpen }: { open: boolean; setOpen: (open: 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='bg-zinc-900/30 backdrop-blur-sm border border-zinc-800/50 rounded-xl overflow-hidden shadow-xl'>
+      <DialogContent className='bg-zinc-800/70 backdrop-blur-md border border-zinc-700 rounded-xl shadow-2xl max-w-md w-full'>
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Form published successfully!</DialogTitle>
-          <DialogDescription>You can now start accepting submissions.</DialogDescription>
+          <DialogTitle className="text-xl font-bold text-white">Form published successfully!</DialogTitle>
+          <DialogDescription className="text-zinc-300">You can now start accepting submissions.</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
-          <Input placeholder="Form name" className='text-white outline-none'readOnly value={formLink} disabled />
-          <Button
-            variant={'default'}
-            size={'sm'}
-            onClick={() => handleCopy(formLink, () => toast.error('Failed to copy'))}
-          >
-            {hasCopied ? <Check className="h-4 w-4 mr-2 text-white" /> : <Copy className="h-4 w-4 mr-2 text-white" />}
-            {hasCopied ? 'Copied' : 'Copy link'}
-          </Button>
+        <div className="flex flex-col gap-3 mt-4">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Input 
+              className='flex-1 bg-zinc-900/60 border-zinc-700 text-white placeholder:text-zinc-400' 
+              readOnly 
+              value={formLink} 
+            />
+            <Button
+              variant={'default'}
+              size={'sm'}
+              className="shrink-0"
+              onClick={() => handleCopy(formLink, () => toast.error('Failed to copy'))}
+            >
+              {hasCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+              {hasCopied ? 'Copied' : 'Copy link'}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
