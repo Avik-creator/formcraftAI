@@ -22,7 +22,7 @@ interface LineChartProps {
 
 export function SubmissionsOvertimeLineChart({ chartData }: LineChartProps) {
   return (
-    <ChartContainer config={chartConfig} className="w-full h-full min-h-[200px] max-h-[230px]">
+    <ChartContainer config={chartConfig} className="w-full h-full min-h-[200px] max-h-[230px] border border-zinc-700">
       <LineChart
         accessibilityLayer
         data={chartData}

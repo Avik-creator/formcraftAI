@@ -10,7 +10,7 @@ const FormCompletionRate = async () => {
 
   return (
     <InfoCard
-      className="col-span-full md:col-span-6 max-h-[400px]"
+      className="col-span-full md:col-span-6 max-h-[400px] border border-zinc-700"
       title={'Completion Rate By Form'}
       icon={BarChartIcon}
       contentClassName="p-0"

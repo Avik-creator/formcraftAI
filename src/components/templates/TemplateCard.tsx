@@ -34,7 +34,7 @@ const TemplateCard = ({ template, onPreview }: TemplateCardProps) => {
   return (
     <Card
       className={cn(
-        'backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg',
+        'backdrop-blur-sm bg-black/30 border border-zinc-700 shadow-lg',
         'hover:-translate-y-1 hover:border-zinc-700/50 transition-transform duration-300 group',
         'overflow-hidden',
       )}

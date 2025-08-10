@@ -10,7 +10,7 @@ import RecentActivity from '@/components/dashboard/overview/RecentActivity';
 
 const Overview = async () => {
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-6 pb-8">
+    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-6 pb-8 ">
       <Suspense fallback={<InfoCardSkeleton className="col-span-full sm:col-span-3 md:col-span-3 max-h-[230px]" />}>
         <TotalSubmissions />
       </Suspense>

@@ -72,7 +72,7 @@ const Forms = () => {
                   id="search-forms"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="h-11 bg-zinc-900/30 border-zinc-800/60 pl-9 backdrop-blur-sm focus:border-zinc-700/70 transition-all placeholder:text-zinc-500 text-white focus:ring-0"
+                  className="h-11 bg-zinc-900/30 border border-zinc-700 pl-9 backdrop-blur-sm focus:border-zinc-700/70 transition-all placeholder:text-zinc-500 text-white focus:ring-0"
                   placeholder="Quickly find your forms..."
                   type="search"
                 />

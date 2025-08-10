@@ -11,7 +11,7 @@ const MostActiveForm = async () => {
 
   return (
     <InfoCard
-      className="col-span-full md:col-span-6 [grid-row:2/span-1] max-h-[230px]"
+      className="col-span-full md:col-span-6 [grid-row:2/span-1] max-h-[230px] border border-zinc-700"
       title={'Most Active Form'}
       icon={StarFilledIcon}
       description={'Form with the highest number of submissions received.'}

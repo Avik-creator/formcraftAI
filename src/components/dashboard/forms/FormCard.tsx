@@ -58,7 +58,7 @@ const FormCard = ({
     <>
       <Card
         className={cn(
-          'group relative overflow-hidden backdrop-blur-sm bg-black/30 border border-zinc-800/50 shadow-lg',
+          'group relative overflow-hidden backdrop-blur-sm bg-black/30 border border-zinc-700 shadow-lg',
           'hover:-translate-y-1 hover:border-zinc-700/50 hover:bg-zinc-900/40 hover:shadow-xl transition-all duration-300',
           {
             'cursor-pointer': !isPreview,

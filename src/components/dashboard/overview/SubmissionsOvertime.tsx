@@ -10,7 +10,7 @@ const SubmissionsOvertime = async () => {
 
   return (
     <InfoCard
-      className="col-span-full md:[grid-column:7/14] max-h-[420px]"
+      className="col-span-full md:[grid-column:7/14] max-h-[420px] border border-zinc-700"
       title={'Submissions Over Time'}
       icon={LineChartIcon}
       contentClassName="p-3"

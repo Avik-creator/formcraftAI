@@ -23,7 +23,7 @@ interface FormCompletionRateBarChartProps {
 
 function FormCompletionRateBarChart({ chartData }: FormCompletionRateBarChartProps) {
   return (
-    <ChartContainer config={chartConfig} className="w-full h-full min-h-[200px] max-h-[230px]">
+    <ChartContainer config={chartConfig} className="w-full h-full min-h-[200px] max-h-[230px] border border-zinc-700">
       <BarChart
         accessibilityLayer
         data={chartData}

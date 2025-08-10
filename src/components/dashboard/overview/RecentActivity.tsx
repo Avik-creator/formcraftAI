@@ -69,7 +69,7 @@ const RecentActivity = async () => {
 
   return (
     <InfoCard
-      className="col-span-full md:[grid-column:7/14] md:max-h-[400px] overflow-hidden"
+      className="col-span-full md:[grid-column:7/14] md:max-h-[400px] overflow-hidden border border-zinc-700"
       title="Recent Activities"
       icon={List}
       contentClassName="overflow-y-auto max-h-[80%]"

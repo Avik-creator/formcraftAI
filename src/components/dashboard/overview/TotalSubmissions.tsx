@@ -11,7 +11,7 @@ const TotalSubmissions = async () => {
 
   return (
     <InfoCard
-      className="col-span-full sm:col-span-3 md:col-span-3 max-h-[230px]"
+      className="col-span-full sm:col-span-3 md:col-span-3 max-h-[230px] border border-zinc-700"
       title="Total Submissions"
       icon={ClipboardList}
       description={'No. of complete/in complete submissions received across all forms.'}
