@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import useFieldConditionalLogicCheckGeneric from '@/hooks/useFieldConditionalLogicCheck';
 import useFormSubmissionId from '@/hooks/useFormSubmissionId';
 import { useCreateFormSubmissionMutation } from '@/data-fetching/client/formSubmission';
+import { useBillingInfoQuery } from '@/data-fetching/client/billing';
 
 import { CUSTOM_FIELD_VALIDATIONS } from '@/lib/validation';
 import { useCreateActivityMutation } from '@/data-fetching/client/activity';
@@ -59,6 +60,11 @@ const Form = ({ formConfig: config }: FormProps) => {
           description: 'This form is not currently accepting submissions',
           duration: 4000,
         });
+      } else if (errorMessage.includes('Monthly submission limit')) {
+        toast.error('Submission Limit Reached', {
+          description: 'The form owner has reached the monthly submission limit on the free plan. Please try again later or contact the owner.',
+          duration: 5000,
+        });
       } else if (errorMessage.includes('Form not found')) {
         toast.error('Form Not Found', {
           description: 'The form you are trying to submit does not exist',
@@ -81,6 +87,8 @@ const Form = ({ formConfig: config }: FormProps) => {
     () => formConfig?.pages?.indexOf(activePageId) + 1,
     [activePageId, formConfig?.pages],
   );
+
+  const { data: billingInfo } = useBillingInfoQuery();
 
   const handleFormSubmit = (data: FieldValues) => {
     const updatedState = { ...formValuesByPage, [activePageId]: data };
@@ -249,6 +257,11 @@ const Form = ({ formConfig: config }: FormProps) => {
         color: formConfig?.theme?.properties?.primaryTextColor || '#ffffff'
       } as React.CSSProperties}
     >
+      {!billingInfo?.isPro && (
+        <div className="-mt-2 mb-2 text-xs text-zinc-400">
+          Free plan: up to 100 submissions/month. Upgrade to Pro for unlimited. <a className="underline" href="/pricing">Upgrade</a>
+        </div>
+      )}
       <FormHeader formConfig={formConfig} currentPageNumber={currentPageNumber} />
 
       <FormContent

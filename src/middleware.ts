@@ -2,9 +2,15 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
 const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/form/(.*)', '/']);
+const isWebhookRoute = createRouteMatcher(['/api/webhook/polar', '/webhook/polar']);
 
 export default clerkMiddleware(async (auth, request) => {
   const { pathname } = request.nextUrl;
+
+  // Always allow webhook callbacks (unauthenticated, no redirects)
+  if (isWebhookRoute(request)) {
+    return NextResponse.next();
+  }
 
   const { userId } = await auth();
 

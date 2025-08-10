@@ -4,6 +4,7 @@ import connectDb from "../db/connection";
 import Form from "../models/form";
 import FormSubmission, { FormSubmissionModelType } from "../models/formSubmission";
 import { convertToPlainObject, verifyAuth } from "../utils";
+import { assertCanAcceptSubmissionForOwnerAction } from './billing';
 
 export const createNewFormSubmissionAction = async (data: FormSubmissionModelType) => {
   try {
@@ -14,6 +15,13 @@ export const createNewFormSubmissionAction = async (data: FormSubmissionModelTyp
     if (!form) throw new Error('Form not found');
 
     if (form.status !== 'published') throw new Error('This form is not published yet. Please contact its owner.');
+
+    // Enforce monthly submission limit for form owner when on free plan
+    const ownerUserId = form.createdBy as string;
+    const canAccept = await assertCanAcceptSubmissionForOwnerAction(ownerUserId);
+    if (!canAccept.success) {
+      return { success: false as const, error: canAccept.error };
+    }
 
     const existingSubmission = await FormSubmission.findOne({
       formId: data?.formId,

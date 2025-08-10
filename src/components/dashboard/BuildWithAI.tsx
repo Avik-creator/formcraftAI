@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useFormActionProperty } from '@/zustand/store';
 import { useRouter } from 'next/navigation';
 import AnimatedPromptTextarea from './AnimatedTextArea';
+import { useBillingInfoQuery, useEnsureCanCreateForm } from '@/data-fetching/client/billing';
 
 const useGeminiChat = () => {
   return useMutation({
@@ -42,11 +43,26 @@ const BuildWithAI = () => {
   const [value, setValue] = React.useState('');
   const setFormConfig = useFormActionProperty('setFormConfig');
   const router = useRouter();
+  const { data: billingInfo } = useBillingInfoQuery();
+  const { mutateAsync: ensureCanCreate } = useEnsureCanCreateForm();
 
-  const handlePromptSubmit = () => {
+  const atFormLimit = Boolean(
+    !billingInfo?.isPro &&
+      (billingInfo?.usage?.formsCount ?? 0) >= (billingInfo?.limits?.maxForms ?? 0),
+  );
+
+  const handlePromptSubmit = async () => {
     const prompt = value;
 
     if (!prompt?.length) return toast.error('Please describe what you need');
+
+    try {
+      await ensureCanCreate();
+    } catch (error) {
+      const description = error instanceof Error ? error.message : 'Upgrade to Pro for unlimited forms.';
+      toast.error('Cannot generate form', { description });
+      return;
+    }
 
     mutateAsync(prompt, {
       onSuccess: (data) => {
@@ -73,6 +89,7 @@ const BuildWithAI = () => {
         <p className="text-xs text-zinc-400">Describe what you need and we’ll generate a form for you.</p>
       </div>
 
+
       <FormField label="Description" id="ai-description" className="text-sm">
         <AnimatedPromptTextarea placeholders={examplePrompts} onValueChange={setValue} />
         <small className="text-zinc-500 text-xs">Tip: mention fields, validation rules, and layout preferences.</small>
@@ -82,7 +99,7 @@ const BuildWithAI = () => {
         variant={'default'}
         className="flex items-center mt-4 w-full"
         onClick={handlePromptSubmit}
-        disabled={isPending}
+        disabled={isPending || atFormLimit}
       >
         {isPending ? (
           <>

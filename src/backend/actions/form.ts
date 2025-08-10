@@ -5,12 +5,19 @@ import connectDb from '../db/connection';
 import Form from '../models/form';
 import { convertToPlainObject, verifyAuth } from '../utils';
 import { FormConfig } from '@/types/index';
+import { assertCanCreateFormAction } from './billing';
 
 export const createFormConfigAction = async () => {
   try {
     const userId = await verifyAuth();
 
     await connectDb();
+
+    // Enforce billing limit: Free plan can create up to 3 forms
+    const canCreate = await assertCanCreateFormAction();
+    if (!canCreate.success) {
+      return { success: false as const, error: canCreate.error };
+    }
 
     const newForm = createNewForm(userId as string);
     const form = new Form(newForm);

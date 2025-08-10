@@ -10,3 +10,4 @@ export const createNewActivity = async (data: ActivityModelType) => {
     throw new Error(res?.error as string);
   }
 };
+

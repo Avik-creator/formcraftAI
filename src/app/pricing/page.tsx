@@ -151,7 +151,7 @@ export default function PricingSection() {
                     </Button>
                   </Link>
                 ) : (
-                  <Link href={user ? getProCheckoutHref() : `/sign-in?redirect_url=${encodeURIComponent('/pricing')}` }>
+                  <Link href={user ? getProCheckoutHref() : `/sign-in?redirect_url=${encodeURIComponent(getProCheckoutHref())}` }>
                     <Button 
                       className="w-full h-12 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-zinc-200 text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl border-0"
                       disabled={!proProductId}
