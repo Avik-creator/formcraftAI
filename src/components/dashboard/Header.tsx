@@ -6,6 +6,7 @@ import CreateFormModal from './CreateFormModal';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import { Button } from '../ui/button';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +34,15 @@ const Header = () => {
           FormCraft
         </Link>
       </div>
+      
       <CreateFormModal open={isOpen} setOpen={setIsOpen} className="ml-auto" />
+      <div className="flex items-center gap-2">
+        <Link href="/pricing">
+          <Button className="bg-gradient-to-r from-zinc-700 to-zinc-800 hover:from-zinc-600 hover:to-zinc-700 border-zinc-600/50 text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl">
+            Upgrade
+          </Button>
+        </Link>
+      </div>
       <UserButton />
     </div>
   );
