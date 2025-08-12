@@ -21,14 +21,76 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useGetFormSubmissionQuery } from '@/data-fetching/client/formSubmission';
+import { useBillingInfoQuery } from '@/data-fetching/client/billing';
 import { cn } from '@/lib/utils';
 import { FieldEntity } from '@/types/index';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { formatDate } from 'date-fns';
-import { ExternalLinkIcon, SlashIcon, Download, Eye } from 'lucide-react';
+import { SlashIcon, Download, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { toast } from 'sonner';
+
+const convertToCSV = (
+  submissions: any[],
+  fieldEntities: Record<string, FieldEntity>,
+  fieldIdsInOrder: string[]
+) => {
+  // Create headers
+  const headers = ['Submission Date', ...fieldIdsInOrder.map(id => fieldEntities[id]?.label)];
+  
+  // Create rows
+  const rows = submissions.map(submission => {
+    const row = [formatDate(submission?.createdAt, 'dd MMM, yyyy')];
+    
+    fieldIdsInOrder.forEach(fieldId => {
+      const field = fieldEntities[fieldId];
+      const value = (submission?.data as Record<string, unknown>)[field?.name as string];
+      
+      // Format value based on field type
+      let formattedValue = '';
+      switch (field?.type) {
+        case 'date':
+          formattedValue = value ? formatDate(value as string, 'dd MMM, yyyy') : '';
+          break;
+        case 'checkbox':
+        case 'dropdown':
+          formattedValue = Array.isArray(value) ? value.join(', ') : String(value || '');
+          break;
+        // Removed file case
+        default:
+          formattedValue = String(value || '');
+      }
+      row.push(formattedValue);
+    });
+    
+    return row;
+  });
+  
+  // Combine headers and rows
+  return [headers, ...rows]
+    .map(row => 
+      row.map(str => {
+        // Escape quotes and wrap in quotes if contains comma or newline
+        const escaped = String(str).replace(/"/g, '""');
+        return escaped.includes(',') || escaped.includes('\n') ? `"${escaped}"` : escaped;
+      }).join(',')
+    )
+    .join('\n');
+};
+
+const downloadCSV = (csvContent: string, filename: string) => {
+  // Add BOM to ensure Excel recognizes UTF-8
+  const BOM = '\ufeff';
+  const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const FieldRenderer = ({ field, value }: { field: FieldEntity; value: unknown }) => {
   switch (field?.type) {
@@ -63,22 +125,7 @@ const FieldRenderer = ({ field, value }: { field: FieldEntity; value: unknown })
         </CustomTooltip>
       );
 
-    case 'file':
-      return (
-        <div className="flex flex-wrap gap-2">
-          {(value as { name: string; url: string }[])?.map((f, i) => (
-            <a
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-blue-900/30 text-blue-300 border border-blue-700/50 hover:bg-blue-800/40 transition-colors"
-              href={f?.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={f?.name}
-            >
-              {f?.name || 'File' + (i + 1)} <ExternalLinkIcon className="w-3 h-3" />
-            </a>
-          ))}
-        </div>
-      );
+    // Removed file upload case
 
     default:
       return <span className="text-sm text-zinc-300">{value as string}</span>;
@@ -90,6 +137,7 @@ export default function TableDemo() {
   const formId = params.formId as string;
 
   const { data, isLoading, isFetching, refetch } = useGetFormSubmissionQuery(formId);
+  const { data: billingInfo } = useBillingInfoQuery();
 
   const fieldEntites = data?.formConfig?.fieldEntities;
   const fieldIdsInOrder = useMemo(
@@ -110,7 +158,6 @@ export default function TableDemo() {
             </TableHead>
           );
         })}
-        <TableHead className="w-24 text-white font-semibold text-sm">Actions</TableHead>
       </>
     );
   };
@@ -136,24 +183,6 @@ export default function TableDemo() {
               </TableCell>
             );
           })}
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-800/50"
-              >
-                <Eye className="w-4 h-4" />
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-800/50"
-              >
-                <Download className="w-4 h-4" />
-              </Button>
-            </div>
-          </TableCell>
         </TableRow>
       );
     });
@@ -192,14 +221,42 @@ export default function TableDemo() {
             </p>
           </div>
         )}
-        <Button 
-          className="flex items-center gap-2 bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-700/50 text-white" 
-          disabled={isLoading || isFetching} 
-          onClick={() => refetch()}
-        >
-          <ReloadIcon className={cn('h-4 w-4', isLoading || (isFetching && 'animate-spin'))} />
-          <span>Refresh</span>
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button 
+            className="flex items-center gap-2 bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-700/50 text-white" 
+            disabled={isLoading || isFetching} 
+            onClick={() => refetch()}
+          >
+            <ReloadIcon className={cn('h-4 w-4', isLoading || (isFetching && 'animate-spin'))} />
+            <span>Refresh</span>
+          </Button>
+
+          <Button
+            className="flex items-center gap-2 bg-emerald-900/30 hover:bg-emerald-800/40 text-emerald-300 border border-emerald-700/30"
+            disabled={isLoading || !submissions?.length}
+            onClick={() => {
+              if (!billingInfo?.isPro) {
+                toast.error('Pro Plan Required', {
+                  description: 'Upgrade to Pro to download submissions as CSV.',
+                  action: {
+                    label: 'Upgrade',
+                    onClick: () => window.location.href = '/pricing'
+                  }
+                });
+                return;
+              }
+              
+              if (!submissions?.length || !fieldEntites || !fieldIdsInOrder?.length) return;
+              
+              const csvContent = convertToCSV(submissions, fieldEntites, fieldIdsInOrder);
+              const filename = `${data?.formConfig?.name || 'form'}-submissions-${formatDate(new Date(), 'yyyy-MM-dd')}.csv`;
+              downloadCSV(csvContent, filename);
+            }}
+          >
+            <Download className="h-4 w-4" />
+            <span>{billingInfo?.isPro ? 'Download CSV' : 'Download CSV (Pro)'}</span>
+          </Button>
+        </div>
       </header>
 
       {isLoading ? (
@@ -216,7 +273,7 @@ export default function TableDemo() {
             <TableBody>
               {submissions?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={(fieldIdsInOrder?.length || 0) + 3} className="text-center py-12">
+                  <TableCell colSpan={(fieldIdsInOrder?.length || 0) + 2} className="text-center py-12">
                     <div className="flex flex-col items-center gap-3">
                       <div className="w-16 h-16 rounded-full bg-zinc-800/50 flex items-center justify-center">
                         <Eye className="w-8 h-8 text-zinc-500" />
@@ -235,13 +292,12 @@ export default function TableDemo() {
             {submissions && submissions.length > 0 && (
               <TableFooter>
                 <TableRow className="border-t-2 border-zinc-600/50 bg-zinc-800/40 hover:bg-zinc-800/50 transition-colors">
-                  <TableCell colSpan={(fieldIdsInOrder?.length || 0) + 2} className="text-white font-semibold text-sm">
+                  <TableCell colSpan={(fieldIdsInOrder?.length || 0) + 1} className="text-white font-semibold text-sm">
                     Total Submissions
                   </TableCell>
                   <TableCell className="text-2xl font-bold text-white">
                     {submissions?.length}
                   </TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               </TableFooter>
             )}

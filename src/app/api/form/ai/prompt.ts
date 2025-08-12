@@ -51,7 +51,7 @@ You are an expert structured form configuration generator. Your task is to gener
 Each field must include:
 - **id**: *(string)* Unique identifier (UUID).
 - **name**: *(string)* Name of the field.
-- **type**: *(enum)* One of: \`'text'\`, \`'checkbox'\`, \`'radio'\`, \`'dropdown'\`, \`'date'\`, \`'textarea'\`, \`'file'\`.
+- **type**: *(enum)* One of: \`'text'\`, \`'checkbox'\`, \`'radio'\`, \`'dropdown'\`, \`'date'\`, \`'textarea'\`.
 - **label**: *(string)* Display label.
 - **placeholder**: *(string, optional)* Placeholder text.
 - **helperText**: *(string, optional)* Additional guidance.
@@ -61,7 +61,7 @@ Each field must include:
 - **options**: *(FieldOption[], optional)* For fields like radio, checkbox, dropdown.
 - **validation**: *(FieldValidation, optional)* (Note: **All validation rules must be included inside the \`custom\` object**).
 - **conditionalLogic**: *(ConditionalLogic, optional)* Defines when the field is displayed.
-- **allowMultiSelect**: *(boolean, optional)* Allows multiple selections for supported fields. **Required** for the 'dropdown' and 'file' field type.
+- **allowMultiSelect**: *(boolean, optional)* Allows multiple selections for supported fields. **Required** for the 'dropdown' field type.
 ---
 
 ### **FieldOption Structure**
@@ -83,12 +83,6 @@ Each field must include:
     - \`isValidDate\`, \`restrictFutureDate\`, \`restrictPastDate\`, \`required\`
   - **For \`radio\`, \`checkbox\`, \`dropdown\` fields**:
     - \`equals\`, \`minCount\`, \`maxCount\`, \`contains\`, \`required\`
-  - - **For \`file\` fields, \`withValue\` rules include**:
-    - \`maxFileSize\` (Max file size in MB)
-    - \`minCount\` (Minimum number of files required)
-    - \`maxCount\` (Maximum number of files allowed)
-  - **For \`file\` fields, \`binary\` rules include**:
-    - \`required\` (Ensures at least one file is uploaded)
 
   
 **Validation Example:**
@@ -107,31 +101,6 @@ Each field must include:
 }
 \`\`\`
 
-**Validation Example For \`file\` field:**
-\`\`\`json
-  "custom": {
-      "required": {
-        "value": true,
-        "message": "File upload is required",
-        "type": "binary"
-      },
-      "maxFileSize": {
-        "value": 5,
-        "message": "File size should not exceed 5MB",
-        "type": "withValue"
-      },
-      "minCount": {
-        "value": 1,
-        "message": "At least one file must be uploaded",
-        "type": "withValue"
-      },
-      "maxCount": {
-        "value": 3,
-        "message": "You can upload up to 3 files",
-        "type": "withValue"
-      }
-  }
-\`\`\`
 ---
 
 ### **ConditionalLogic Structure**
@@ -180,7 +149,6 @@ Conditional Logic Example:
 - **submission**:
   - **emailNotifications**: *(boolean)* Enable email notifications on submission.
   - **redirectURL**: *(string)* URL to redirect after submission.
-- **fileUploadLimit**: *(string)* Maximum file upload size (e.g., \`"5MB"\`).
 
 ---
 
@@ -258,5 +226,5 @@ export const formThemes = {
 ✅ Ensure all \`id\` fields are unique UUIDs.  
 ✅ Maintain logical references (fields in pages must exist in \`fieldEntities\`).  
 ✅ **Theme configuration must strictly use one of the available themes from the \`formThemes\` data above.**
-
+✅ **Do not include any file upload validation rules.**
 `;

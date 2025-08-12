@@ -114,6 +114,14 @@ const config: Config = {
         'pulse-subtle': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.85' }
+        },
+        'shimmer': {
+          '0%': {
+            transform: 'translateX(-100%)'
+          },
+          '100%': {
+            transform: 'translateX(100%)'
+          }
         }
   		},
   		animation: {
@@ -122,7 +130,8 @@ const config: Config = {
         'fadeIn': 'fadeIn 0.5s ease-out',
         'slideUp': 'slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
         'scaleIn': 'scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite'
+        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite'
   		}
   	}
   },
