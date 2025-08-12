@@ -80,36 +80,58 @@ const FormPage = async ({ params }: FormPageProps) => {
 
     return (
       <main
-        className={`w-full h-full overflow-x-hidden min-h-screen relative bg-gradient-to-b ${gradientConfig.backgroundGradient} flex flex-col px-2 sm:px-4 py-8`}
+        className={`w-full min-h-screen overflow-x-hidden relative bg-gradient-to-b ${gradientConfig.backgroundGradient} flex flex-col items-center justify-start px-4 sm:px-6 py-12 animate-fadeIn`}
       >
-        {/* Accent glow effects */}
+        {/* Accent glow effects with enhanced positioning and size */}
         <div
-          className={`absolute top-20 -right-40 w-96 h-96 ${gradientConfig.accentGlow1} rounded-full filter blur-[100px] pointer-events-none z-0`}
+          className={`absolute top-0 -right-20 w-[600px] h-[600px] ${gradientConfig.accentGlow1} rounded-full filter blur-[120px] opacity-75 animate-pulse pointer-events-none z-0`}
+          style={{ animationDuration: '10s' }}
         ></div>
         <div
-          className={`absolute bottom-20 -left-40 w-96 h-96 ${gradientConfig.accentGlow2} rounded-full filter blur-[100px] pointer-events-none z-0`}
+          className={`absolute bottom-0 -left-20 w-[600px] h-[600px] ${gradientConfig.accentGlow2} rounded-full filter blur-[120px] opacity-75 animate-pulse pointer-events-none z-0`}
+          style={{ animationDuration: '12s' }}
         ></div>
 
-        {/* Additional glow for specific themes */}
+        {/* Enhanced glow for specific themes */}
         {(themeName === 'deep-violet' || themeName === 'night-sky') && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-900/5 to-blue-900/5 rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-br from-purple-900/10 to-blue-900/10 rounded-full filter blur-[130px] animate-pulse pointer-events-none z-0"
+            style={{ animationDuration: '15s' }}
+          ></div>
         )}
 
-        {/* Grid background */}
+        {/* Improved grid background with fade effect */}
         <div
-          className="absolute z-0 inset-0 bg-[url('/grid.svg')] bg-center pointer-events-none"
-          style={{ opacity: gradientConfig.gridOpacity }}
+          className="absolute z-0 inset-0 bg-[url('/grid.svg')] bg-center bg-repeat pointer-events-none animate-fadeIn"
+          style={{ 
+            opacity: gradientConfig.gridOpacity,
+            maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)'
+          }}
         ></div>
 
-        {/* Main form component */}
-        <div className="relative z-10">
-          <Form formConfig={formConfig} />
-        </div>
+        {/* Main content container with max width */}
+        <div className="w-full max-w-3xl mx-auto relative z-10 rounded-2xl backdrop-blur-sm">
+          {/* Main form component */}
+          <div className="animate-slideUp">
+            <Form formConfig={formConfig} />
+          </div>
 
-        {/* Footer branding */}
-        <div className="mt-8 flex items-center justify-center opacity-30 hover:opacity-70 transition-opacity -ml-2 relative z-10">
-        <Image src="/logo.webp" alt="FormCraft" width={32} height={32} />
-          <span className="text-sm font-medium text-zinc-200">Powered by FormCraft</span>
+          {/* Enhanced footer branding */}
+          <div className="mt-12 flex items-center justify-center gap-2 opacity-40 hover:opacity-90 transition-all duration-300 group relative z-10">
+            <div className="relative transform group-hover:scale-110 transition-transform duration-300">
+              <Image 
+                src="/logo.webp" 
+                alt="FormCraft" 
+                width={32} 
+                height={32} 
+                className="rounded-lg shadow-lg"
+              />
+            </div>
+            <span className="text-sm font-medium text-zinc-100 tracking-wide">
+              Powered by FormCraft
+            </span>
+          </div>
         </div>
       </main>
     );

@@ -27,7 +27,11 @@ export interface FormProps {
 type FormValueByPageMap = Record<string, Record<string, unknown>>;
 
 const classes = cn(
-  'flex relative z-20 flex-col gap-9 border-yellow-200/10 px-3 py-5 md:px-7 md:py-5 mx-auto my-auto border border-dashed rounded-md w-[95%] md:w-[min(80%,890px)] transition-all duration-200',
+  'flex relative z-20 flex-col gap-9 px-4 py-6 md:px-8 md:py-7 mx-auto my-auto',
+  'w-[95%] md:w-[min(80%,890px)] transition-all duration-300',
+  'border border-zinc-200/10 rounded-2xl backdrop-blur-sm',
+  'hover:border-zinc-200/20 focus-within:border-zinc-200/20',
+  'shadow-[0_0_30px_10px_rgba(0,0,0,0.3)] hover:shadow-[0_0_35px_15px_rgba(0,0,0,0.35)]',
 );
 
 const Form = ({ formConfig: config }: FormProps) => {
@@ -248,14 +252,62 @@ const Form = ({ formConfig: config }: FormProps) => {
   if (isSubmissionSuccess) {
     return (
       <section
-        className={'m-auto relative z-20 text-center grid gap-1'}
-        style={{ backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000', fontFamily }}
+        className={cn(
+          'm-auto relative z-20 text-center',
+          'p-8 sm:p-10 rounded-2xl backdrop-blur-sm',
+          'border border-zinc-200/10 shadow-[0_0_30px_10px_rgba(0,0,0,0.3)]',
+          'animate-fadeIn'
+        )}
+        style={{ 
+          backgroundColor: formConfig?.theme?.properties?.formBackgroundColor || '#000000',
+          fontFamily 
+        }}
       >
-        <h3 className="font-bold text-white text-xl sm:text-3xl">Thank you!</h3>
-        <p className="text-white/90 text-sm sm:text-xl">Your form has been successfully submitted.</p>
+        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-500/10 flex items-center justify-center">
+          <svg 
+            className="w-8 h-8 text-green-500 animate-scaleIn" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M5 13l4 4L19 7" 
+            />
+          </svg>
+        </div>
+        
+        <h3 className="font-bold text-white text-2xl sm:text-4xl mb-3 animate-slideUp" style={{ animationDelay: '100ms' }}>
+          Thank you!
+        </h3>
+        <p className="text-white/80 text-base sm:text-xl mb-8 animate-slideUp" style={{ animationDelay: '200ms' }}>
+          Your form has been successfully submitted.
+        </p>
 
-        <Button variant={'default'} onClick={() => router.replace('/')}>
-          Go Home
+        <Button 
+          variant="default"
+          onClick={() => router.replace('/')}
+          className="animate-slideUp px-6 py-2 text-base transition-transform hover:scale-105"
+          style={{ animationDelay: '300ms' }}
+        >
+          <svg 
+            className="w-4 h-4 mr-2 -ml-1" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" 
+            />
+          </svg>
+          Return Home
         </Button>
       </section>
     );
@@ -275,8 +327,17 @@ const Form = ({ formConfig: config }: FormProps) => {
       } as React.CSSProperties}
     >
       {!billingInfo?.isPro && (
-        <div className="-mt-2 mb-2 text-xs text-zinc-400">
-          Free plan: up to 100 submissions/month. Upgrade to Pro for unlimited. <a className="underline" href="/pricing">Upgrade</a>
+        <div className="flex items-center justify-center gap-2 -mt-3 mb-3 text-xs text-zinc-400/80 bg-zinc-800/30 py-2 px-3 rounded-full backdrop-blur-sm border border-zinc-700/20 hover:bg-zinc-800/40 transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          Free plan: up to 100 submissions/month
+          <a 
+            href="/pricing" 
+            className="text-primary hover:text-primary/80 font-medium underline-offset-2 hover:underline transition-colors duration-200"
+          >
+            Upgrade to Pro
+          </a>
         </div>
       )}
       <FormHeader formConfig={formConfig} currentPageNumber={currentPageNumber} />
