@@ -32,8 +32,10 @@ import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
 
+import type { FormSubmissionResponse } from '@/data-fetching/functions/formSubmission';
+
 const convertToCSV = (
-  submissions: any[],
+  submissions: FormSubmissionResponse[],
   fieldEntities: Record<string, FieldEntity>,
   fieldIdsInOrder: string[]
 ) => {
@@ -46,7 +48,8 @@ const convertToCSV = (
     
     fieldIdsInOrder.forEach(fieldId => {
       const field = fieldEntities[fieldId];
-      const value = (submission?.data as Record<string, unknown>)[field?.name as string];
+      const submissionData = submission?.data instanceof Map ? Object.fromEntries(submission.data) : submission?.data;
+      const value = (submissionData as Record<string, unknown>)[field?.name as string];
       
       // Format value based on field type
       let formattedValue = '';
@@ -176,7 +179,8 @@ export default function TableDemo() {
           </TableCell>
           {fieldIdsInOrder?.map((fieldId) => {
             const field = fieldEntites?.[fieldId];
-            const rec = submission?.data as unknown as Record<string, unknown>;
+            const submissionData = submission?.data instanceof Map ? Object.fromEntries(submission.data) : submission?.data;
+            const rec = submissionData as Record<string, unknown>;
             return (
               <TableCell key={`${submission?.createdAt?.toString()}-${fieldId}`}>
                 <FieldRenderer field={field!} value={rec?.[field?.name as string]} />
