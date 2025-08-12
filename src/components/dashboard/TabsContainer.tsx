@@ -26,7 +26,7 @@ const TabsContainer = ({ children }: { children: React.ReactNode }) => {
             <Skeleton className="h-7 w-52 rounded-md mx-auto sm:mx-0" />
           ) : (
             <h2 className="font-bold text-white md:text-2xl text-lg">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">Hey {user?.firstName ?? '...'}!</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">Hey {(user?.firstName || user?.username || user?.emailAddresses[0]?.emailAddress || user?.fullName) ?? '...'}!</span>
               <span>👋</span>
             </h2>
           )}
