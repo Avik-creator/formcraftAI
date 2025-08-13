@@ -5,7 +5,7 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { useFormActionProperty, useFormConfigStore, useFormProperty } from '@/zustand/store';
 import { useUser } from '@clerk/nextjs';
-import { Check, Copy, Lock, Share } from 'lucide-react';
+import { Check, Copy, Lock, Share, X } from 'lucide-react';
 import { usePublishFormMutation } from '@/data-fetching/client/form';
 import { generateId } from '@/lib/utils';
 import { getAppOriginUrl } from '@/utils/functions';
@@ -139,36 +139,46 @@ const TopHeader = () => {
 export default TopHeader;
 
 const PublishedFormModal = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) => {
-  const formLink = `${getAppOriginUrl()}/form/${useFormProperty('id')}`;
-  const { handleCopy, hasCopied } = useCopyInfo();
+  const formLink = `${getAppOriginUrl()}/form/${useFormProperty("id")}`
+  const { handleCopy, hasCopied } = useCopyInfo()
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='bg-zinc-800/70 backdrop-blur-md border border-zinc-700 rounded-xl shadow-2xl max-w-md w-full'>
+      <DialogContent className="bg-black/60 backdrop-blur-xl border border-zinc-700/60 rounded-xl shadow-2xl ring-1 ring-white/10 max-w-md w-full">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white">Form published successfully!</DialogTitle>
-          <DialogDescription className="text-zinc-300">You can now start accepting submissions.</DialogDescription>
+          <DialogTitle className="text-xl font-bold bg-gradient-to-r from-white to-zinc-200 bg-clip-text text-transparent">
+            Form published successfully!
+            <Button
+          variant="ghost"
+          size="sm"
+          className="absolute top-4 right-4 h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200 rounded-lg"
+          onClick={() => setOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          </DialogTitle>
+          <DialogDescription className="text-zinc-300/90">You can now start accepting submissions.</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-3 mt-4">
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Input 
-              className='flex-1 bg-zinc-900/60 border-zinc-700 text-white placeholder:text-zinc-400' 
-              readOnly 
-              value={formLink} 
+        <div className="flex flex-col gap-4 mt-6">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Input
+              className="flex-1 bg-zinc-900/80 border-zinc-600/60 text-white placeholder:text-zinc-400 ring-1 ring-white/5 focus:ring-white/20 focus:border-zinc-500 transition-all duration-200"
+              readOnly
+              value={formLink}
             />
             <Button
-              variant={'default'}
-              size={'sm'}
-              className="shrink-0"
-              onClick={() => handleCopy(formLink, () => toast.error('Failed to copy'))}
+              variant={"default"}
+              size={"sm"}
+              className="shrink-0 bg-white text-black hover:bg-zinc-200 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-200 font-medium"
+              onClick={() => handleCopy(formLink, () => toast.error("Failed to copy"))}
             >
               {hasCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-              {hasCopied ? 'Copied' : 'Copy link'}
+              {hasCopied ? "Copied" : "Copy link"}
             </Button>
           </div>
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
