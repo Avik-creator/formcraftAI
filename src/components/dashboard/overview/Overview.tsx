@@ -1,12 +1,12 @@
-import React, { Suspense } from 'react';
+import { Suspense } from "react"
 
-import { InfoCardSkeleton } from '@/components/dashboard/overview/InfoCard';
-import FormCompletionRate from '@/components/dashboard/overview/FormCompletionRate';
-import SubmissionsOvertime from '@/components/dashboard/overview/SubmissionsOvertime';
-import MostActiveForm from '@/components/dashboard/overview/MostActiveForm';
-import TotalSubmissions from './TotalSubmissions';
-import AverageCompletionRate from './AverageCompletionRate';
-import RecentActivity from '@/components/dashboard/overview/RecentActivity';
+import { InfoCardSkeleton } from "@/components/dashboard/overview/InfoCard"
+import FormCompletionRate from "@/components/dashboard/overview/FormCompletionRate"
+import SubmissionsOvertime from "@/components/dashboard/overview/SubmissionsOvertime"
+import MostActiveForm from "@/components/dashboard/overview/MostActiveForm"
+import TotalSubmissions from "./TotalSubmissions"
+import AverageCompletionRate from "./AverageCompletionRate"
+import RecentActivity from "@/components/dashboard/overview/RecentActivity"
 
 const Overview = async () => {
   return (
@@ -37,7 +37,7 @@ const Overview = async () => {
         <RecentActivity />
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
-export default Overview;
+export default Overview
