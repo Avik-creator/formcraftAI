@@ -1,43 +1,65 @@
-'use client';
+"use client"
 
-import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useUser } from '@clerk/nextjs';
-import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import { Skeleton } from "@/components/ui/skeleton"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useUser } from "@clerk/nextjs"
+import { usePathname, useRouter } from "next/navigation"
+import type React from "react"
+
+const TabsContainerLoading = () => {
+  return (
+    <div className="flex-1">
+      <div className="flex justify-between gap-6 md:items-center sm:flex-row flex-col">
+        <div className="div text-center md:text-left">
+          <Skeleton className="h-7 w-52 rounded-md mx-auto sm:mx-0 bg-zinc-800/60" />
+          <Skeleton className="h-3 w-96 rounded-md mt-1 mx-auto sm:mx-0 bg-zinc-800/60" />
+        </div>
+        <div className="justify-between gap-3 items-center sm:flex mx-auto sm:m-0">
+          <div className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/60 rounded-xl p-1 shadow-sm flex">
+            <Skeleton className="h-8 w-20 rounded-lg bg-zinc-800/60" />
+            <Skeleton className="h-8 w-20 rounded-lg bg-zinc-800/60 ml-1" />
+            <Skeleton className="h-8 w-20 rounded-lg bg-zinc-800/60 ml-1" />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <Skeleton className="h-32 w-full rounded-lg bg-zinc-800/60" />
+      </div>
+    </div>
+  )
+}
 
 const TabsContainer = ({ children }: { children: React.ReactNode }) => {
-  const { isLoaded, user } = useUser();
-  const pathname = usePathname();
-  const router = useRouter();
+  const { isLoaded, user } = useUser()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  if (!isLoaded) {
+    return <TabsContainerLoading />
+  }
 
   return (
     <Tabs
       defaultValue="/"
       value={pathname}
       onValueChange={(value) => {
-        router.push(value, { scroll: false });
+        router.push(value, { scroll: false })
       }}
       className="flex-1"
     >
       <div className="flex justify-between gap-6 md:items-center sm:flex-row flex-col">
         <div className="div text-center md:text-left">
-          {!isLoaded ? (
-            <Skeleton className="h-7 w-52 rounded-md mx-auto sm:mx-0" />
-          ) : (
-            <h2 className="font-bold text-white md:text-2xl text-lg">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">Hey {(user?.firstName || user?.username || user?.emailAddresses[0]?.emailAddress || user?.fullName) ?? '...'}!</span>
-              <span>👋</span>
-            </h2>
-          )}
-
-          {!isLoaded ? (
-            <Skeleton className="h-3 w-96 rounded-md mt-1 mx-auto sm:mx-0" />
-          ) : (
-            <p className="text-xs text-muted-foreground">
-              This is your dashboard, here you can see how your forms are performing, recent activity and more.
-            </p>
-          )}
+          <h2 className="font-bold text-white md:text-2xl text-lg">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+              Hey{" "}
+              {(user?.firstName || user?.username || user?.emailAddresses[0]?.emailAddress || user?.fullName) ?? "..."}!
+            </span>
+            <span>👋</span>
+          </h2>
+          <p className="text-xs text-muted-foreground">
+            This is your dashboard, here you can see how your forms are performing, recent activity and more.
+          </p>
         </div>
         <div className="justify-between gap-3 items-center sm:flex mx-auto sm:m-0">
           <TabsList className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/60 rounded-xl p-1 shadow-sm">
@@ -67,7 +89,8 @@ const TabsContainer = ({ children }: { children: React.ReactNode }) => {
         {children}
       </TabsContent>
     </Tabs>
-  );
-};
+  )
+}
 
-export default TabsContainer;
+export default TabsContainer
+
