@@ -1,53 +1,52 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import React from 'react';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
-const TemplateCardSkeleton = () => {
+const TemplateCardSkeleton = ({ delay = 0 }) => {
   return (
-    <Card className="w-full relative border-[#212326] border-dashed shadow-xl group">
-      {/* Image Skeleton */}
-
+    <Card
+      className="backdrop-blur-sm bg-black/40 border border-zinc-800/60 shadow-xl transition-all duration-300 dark:bg-black/40 dark:border-zinc-800/60"
+      style={{ animationDelay: `${delay}ms` }}
+    >
       {/* Card Header Skeleton */}
-      <CardHeader className="space-y-2 px-4 py-2">
-        <div className="relative w-full h-[200px] overflow-hidden bg-black my-2">
-          <Skeleton className="w-full h-full rounded-md" />
+      <CardHeader className="space-y-3 px-4 py-4">
+        <div className="relative w-full h-[200px] overflow-hidden bg-zinc-900/30 rounded-lg border border-zinc-800/30">
+          <Skeleton className="w-full h-full bg-zinc-800/60 dark:bg-zinc-800/60" />
         </div>
+
         <CardTitle>
-          <Skeleton className="h-6 w-[90%]" /> {/* Title Skeleton */}
+          <Skeleton className="h-5 w-[85%] bg-zinc-800/60 dark:bg-zinc-800/60" />
         </CardTitle>
-        <CardDescription>
-          <Skeleton className="h-4 w-[70%]" /> {/* Description Skeleton */}
+
+        <CardDescription className="space-y-2">
+          <Skeleton className="h-3 w-[90%] bg-zinc-800/60 dark:bg-zinc-800/60" />
+          <Skeleton className="h-3 w-[60%] bg-zinc-800/60 dark:bg-zinc-800/60" />
         </CardDescription>
       </CardHeader>
 
       {/* Card Footer Skeleton */}
-      <CardFooter className="flex items-center flex-wrap w-full px-4 py-2 gap-3 mb-3">
-        <Skeleton className="h-6 w-48 rounded-full" /> {/* Tag Skeleton */}
+      <CardFooter className="flex items-center flex-wrap w-full px-4 py-3 gap-2">
+        <Skeleton className="h-5 w-16 rounded-full bg-zinc-800/60 dark:bg-zinc-800/60" />
+        <Skeleton className="h-5 w-20 rounded-full bg-zinc-800/60 dark:bg-zinc-800/60" />
+        <Skeleton className="h-5 w-12 rounded-full bg-zinc-800/60 dark:bg-zinc-800/60" />
       </CardFooter>
     </Card>
-  );
-};
+  )
+}
 
-const loading = () => {
+const TemplateLoading = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between gap-4 items-center">
-        <Skeleton className="md:w-[500px] h-11 bg-black border-input border rounded-lg" />
+        <Skeleton className="md:w-[500px] h-10 rounded-lg bg-zinc-800/60 dark:bg-zinc-800/60" />
       </div>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 rounded-lg">
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
-        <TemplateCardSkeleton />
+
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
+        {Array.from({ length: 8 }, (_, i) => (
+          <TemplateCardSkeleton key={i} delay={i * 100} />
+        ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default loading;
+export default TemplateLoading
