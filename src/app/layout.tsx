@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description: "Want to create a form? FormCraft AI is here to help you generate forms with AI.",
   abstract: "Want to create a form? FormCraft AI is here to help you generate forms with AI.",
   creator: "Avik Mukherjee",
-  metadataBase: new URL("https://formcraftai.avikmukherjee.me"),
+  metadataBase: new URL("https://formcraftai.xyz"),
 
   openGraph:{
     title: "FormCraft AI",
@@ -32,16 +32,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "FormCraft AI",
-    images:"https://formcraftai.avikmukherjee.me/og-image.png",
+    images:"https://formcraftai.xyz/og-image.png",
     countryName:"India",
-    url:"https://formcraftai.avikmukherjee.me"
+    url:"https://formcraftai.xyz"
   },
   twitter:{
     card: "summary",
     creator: "Avik Mukherjee",
     site: "FormCraft AI",
     title: "FormCraft AI",
-     images:"https://formcraftai.avikmukherjee.me/og-image.png",
+     images:"https://formcraftai.xyz/og-image.png",
     description: "Want to create a form? FormCraft AI is here to help you generate forms with AI.",
 
   },

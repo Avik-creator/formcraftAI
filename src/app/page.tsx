@@ -148,14 +148,14 @@ const LandingPage = () => {
                                                     className="block dark:hidden"
                                                     animationStyle="from-center"
                                                     videoSrc="https://www.youtube.com/embed/QobiyTAybSg"
-                                                    thumbnailSrc="https://formcraftai.avikmukherjee.me/og-image.png"
+                                                    thumbnailSrc="https://formcraftai.xyz/og-image.png"
                                                     thumbnailAlt="Hero Video"
                                                 />
                         <HeroVideoDialog
                                             className="hidden dark:block"
                                             animationStyle="from-center"
                                             videoSrc="https://www.youtube.com/embed/QobiyTAybSg"
-                                            thumbnailSrc="https://formcraftai.avikmukherjee.me/og-image.png"
+                                            thumbnailSrc="https://formcraftai.xyz/og-image.png"
                                             thumbnailAlt="Hero Video"
                                         />
                            
